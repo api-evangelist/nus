@@ -1,0 +1,48 @@
+---
+name: National University of Singapore
+description: National University of Singapore public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      NUS has no single official public developer portal. The strongest
+      confirmed public APIs are on the open scholarly side: ScholarBank@NUS runs
+      DSpace 7.6 with a live REST API (/server/api responds with a root document
+      identifying DSpace 7.6) and a live OAI-PMH interface. Module/timetable
+      data is available via the community-maintained NUSMods API
+      (api.nusmods.com/v2), which is explicitly unofficial. Most student and
+      admin systems sit behind ADFS/SAML SSO (vafs.nus.edu.sg/adfs). Note:
+      github.com/nus is NOT National University of Singapore (it resolves to an
+      unrelated individual user), so no official NUS GitHub org was cataloged.
+      No endpoints were fabricated; every URL below was probed live.
+    endpoints:
+      - url: https://scholarbank.nus.edu.sg/server/api
+        status: 200
+        note: DSpace 7.6 REST API root; returns dspaceVersion and HAL _links.
+      - url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+        status: 200
+        note: OAI-PMH harvesting interface, live.
+      - url: https://scholarbank.nus.edu.sg/
+        status: 200
+        note: ScholarBank@NUS institutional repository (DSpace 7 Angular UI).
+      - url: https://api.nusmods.com/v2/2024-2025/moduleList.json
+        status: 200
+        note: NUSMods community/unofficial API, live module data per acad year.
+      - url: https://nus.edu.sg/
+        status: 200
+        note: Official NUS website.
+      - url: https://vafs.nus.edu.sg/adfs/ls/
+        status: 200
+        note: ADFS/SAML single sign-on endpoint; gated, not public API.
+      - url: https://twitter.com/NUSingapore
+        status: 200
+        note: Official NUS X/Twitter account.
+      - url: https://github.com/nus
+        status: 200
+        note: NOT NUS — resolves to unrelated GitHub user; excluded from catalog.
+      - url: https://noc.comp.nus.edu.sg/docs/
+        status: 0
+        note: School of Computing NOC docs did not resolve at probe time.

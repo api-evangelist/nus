@@ -1,0 +1,94 @@
+---
+aid: nus
+name: National University of Singapore
+description: >-
+  The National University of Singapore (NUS) is Singapore's flagship public
+  research university, ranked #8 in the QS World University Rankings 2025. NUS
+  does not operate a single unified, public developer portal; its documented,
+  programmatically accessible footprint is concentrated in its open scholarly
+  infrastructure. The institutional repository ScholarBank@NUS runs on DSpace
+  7.6 and exposes both a REST API and an OAI-PMH metadata harvesting interface.
+  Module and timetable data is also available via the community-maintained
+  NUSMods API (unofficial), which normalizes NUS course information. Most
+  administrative and student-facing systems sit behind ADFS/SAML single sign-on
+  and are not publicly documented.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Singapore
+  - Research
+  - Open Access
+  - Repository
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: nus:scholarbank-rest
+    name: ScholarBank@NUS DSpace REST API
+    description: >-
+      ScholarBank@NUS is the digital institutional repository of the National
+      University of Singapore, built on DSpace 7.6. Its HAL-style REST API
+      exposes communities, collections, items, bitstreams, and metadata for the
+      university's scholarly output, theses, and research data underpinning
+      published findings.
+    humanURL: https://scholarbank.nus.edu.sg/
+    baseURL: https://scholarbank.nus.edu.sg/server/api
+    tags: [ Repository, Research, Open Access, DSpace, Scholarly ]
+    properties:
+      - type: Documentation
+        url: https://scholarbank.nus.edu.sg/server/api
+  - aid: nus:scholarbank-oai
+    name: ScholarBank@NUS OAI-PMH Interface
+    description: >-
+      OAI-PMH metadata harvesting endpoint for ScholarBank@NUS, supporting
+      standard verbs (Identify, ListRecords, ListMetadataFormats, GetRecord)
+      for harvesting Dublin Core and other metadata formats from the NUS
+      institutional repository.
+    humanURL: https://scholarbank.nus.edu.sg/
+    baseURL: https://scholarbank.nus.edu.sg/oai/request
+    tags: [ Repository, OAI-PMH, Metadata, Harvesting, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+  - aid: nus:nusmods
+    name: NUSMods API (Unofficial / Community)
+    description: >-
+      Community-maintained, unofficial JSON API providing NUS module, course,
+      and timetable data normalized by the NUSModifications open-source project.
+      Provides module lists, module details, faculty/department listings, and
+      lesson types organized by academic year and semester. Not an official NUS
+      service.
+    humanURL: https://github.com/nusmodifications/nusmods
+    baseURL: https://api.nusmods.com/v2/
+    tags: [ Courses, Modules, Timetable, Community, Unofficial ]
+    properties:
+      - type: Documentation
+        url: https://github.com/nusmodifications/nusmods-api/blob/master/README.md
+      - type: GitHub
+        url: https://github.com/nusmodifications/nusmods
+common:
+  - type: Website
+    url: https://nus.edu.sg/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/national-university-of-singapore/
+  - type: Twitter
+    url: https://twitter.com/NUSingapore
+  - type: Authentication
+    url: https://vafs.nus.edu.sg/adfs/ls/
+  - type: Plans
+    url: plans/nus-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/nus-rate-limits.yml
+  - type: FinOps
+    url: finops/nus-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
