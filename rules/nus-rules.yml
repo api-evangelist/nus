@@ -1,0 +1,50 @@
+rules:
+  nus-info-contact-or-description:
+    description: API info should carry a description so consumers understand the NUSMods data scope.
+    severity: warn
+    given: $.info
+    then:
+      field: description
+      function: truthy
+
+  nus-server-https:
+    description: Prefer the HTTPS NUSMods server entry.
+    severity: warn
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  nus-paths-end-in-json:
+    description: All NUSMods resources are static JSON files; every path must end in .json (observed convention).
+    severity: error
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        match: "\\.json$"
+
+  nus-get-only:
+    description: NUSMods data is read-only; only GET operations are expected.
+    severity: error
+    given: $.paths[*][?(@property != 'get' && @property != 'summary' && @property != 'parameters' && @property != 'description')]~
+    then:
+      function: falsy
+
+  nus-acadyear-path-param:
+    description: Year-scoped resources should declare the acadYear path parameter.
+    severity: warn
+    given: $.paths[?(@property.match(/{acadYear}/))][get].parameters
+    then:
+      function: truthy
+
+  nus-module-code-string:
+    description: moduleCode is always a string identifier (e.g. CS2100).
+    severity: warn
+    given: $.components.schemas[*].properties.moduleCode
+    then:
+      field: type
+      function: pattern
+      functionOptions:
+        match: "^string$"

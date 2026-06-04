@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/json-schema/nus-venueinformation-schema.json",
+  "title": "NUS VenueInformation",
+  "description": "Per-venue availability and scheduled classes as returned by the NUSMods API endpoint /{acadYear}/semesters/{semester}/venueInformation.json. Derived from the NUSMods OpenAPI 3.0.1 VenueInformation schema.",
+  "type": "object",
+  "properties": {
+    "day": {
+      "type": "string",
+      "enum": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    },
+    "classes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/VenueLesson" }
+    },
+    "availability": {
+      "type": "object",
+      "description": "Map of half-hourly time slot to occupancy status.",
+      "additionalProperties": { "type": "string", "enum": ["occupied"] },
+      "examples": [{ "0900": "occupied", "0930": "occupied", "1000": "occupied" }]
+    }
+  },
+  "$defs": {
+    "VenueLesson": {
+      "type": "object",
+      "required": ["classNo", "startTime", "endTime", "weeks", "venue", "lessonType", "moduleCode"],
+      "properties": {
+        "moduleCode": { "type": "string", "examples": ["CS1010S"] },
+        "classNo": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "weeks": {
+          "oneOf": [
+            { "type": "object" },
+            { "type": "array", "items": { "type": "number" } }
+          ]
+        },
+        "venue": { "type": "string" },
+        "day": { "type": "string" },
+        "lessonType": { "type": "string" },
+        "size": { "type": "number" }
+      }
+    }
+  }
+}

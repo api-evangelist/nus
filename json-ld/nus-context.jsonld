@@ -1,0 +1,55 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "nus": "https://api-evangelist.github.io/nus/vocab#",
+    "@vocab": "https://api-evangelist.github.io/nus/vocab#",
+
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+
+    "institution": {
+      "@id": "schema:CollegeOrUniversity",
+      "@type": "@id"
+    },
+
+    "Module": "nus:Module",
+    "ModuleCondensed": "nus:ModuleCondensed",
+    "VenueInformation": "nus:VenueInformation",
+    "Lesson": "nus:Lesson",
+
+    "moduleCode": "schema:courseCode",
+    "title": "schema:name",
+    "acadYear": "schema:academicYear",
+    "moduleCredit": "schema:numberOfCredits",
+    "department": "schema:department",
+    "faculty": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    },
+    "prerequisite": "schema:coursePrerequisites",
+    "semester": "nus:semester",
+    "semesterData": "nus:semesterData",
+    "timetable": {
+      "@id": "schema:hasCourseInstance",
+      "@container": "@set"
+    },
+    "lessonType": "nus:lessonType",
+    "classNo": "nus:classNo",
+    "day": "schema:dayOfWeek",
+    "startTime": "schema:startTime",
+    "endTime": "schema:endTime",
+    "venue": {
+      "@id": "schema:location",
+      "@type": "@id"
+    },
+    "weeks": "nus:weeks",
+    "workload": "nus:workload",
+    "availability": "nus:availability"
+  },
+  "@type": "schema:CollegeOrUniversity",
+  "name": "National University of Singapore",
+  "url": "https://nus.edu.sg/",
+  "description": "Educational organization context for NUS-cataloged API objects, primarily the NUSMods module and timetable data model."
+}

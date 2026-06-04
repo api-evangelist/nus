@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.nusmods.com/v2/2024-2025/moduleList.json"
+  },
+  "response": [
+    {
+      "moduleCode": "ABM5001",
+      "title": "Leadership in Biomedicine",
+      "semesters": [
+        2
+      ]
+    },
+    {
+      "moduleCode": "ABM5002",
+      "title": "Advanced Biostatistics for Research",
+      "semesters": [
+        2
+      ]
+    },
+    {
+      "moduleCode": "ABM5003",
+      "title": "Biomedical Innovation & Enterprise",
+      "semesters": [
+        1
+      ]
+    },
+    {
+      "moduleCode": "ABM5004",
+      "title": "Capstone Project",
+      "semesters": [
+        1,
+        2
+      ]
+    },
+    {
+      "moduleCode": "ABM5101",
+      "title": "Applied Immunology",
+      "semesters": [
+        1
+      ]
+    }
+  ]
+}

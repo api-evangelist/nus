@@ -1,0 +1,57 @@
+vocabulary:
+  name: NUS NUSMods API Vocabulary
+  description: >-
+    Controlled vocabulary for the terms used across the NUSMods API (the
+    community-maintained interface to National University of Singapore module,
+    timetable, and venue data). Terms are drawn directly from the NUSMods
+    OpenAPI 3.0.1 specification served at https://api.nusmods.com/v2/swagger.yaml.
+  version: "2.0.0"
+  terms:
+    - term: acadYear
+      definition: The academic year a module record belongs to, formatted as a slash-separated year span such as 2024/2025.
+      tags: [time, identifier]
+    - term: moduleCode
+      definition: The official NUS code identifying a module, such as CS2100 or EL1101E.
+      tags: [identifier, module]
+    - term: moduleCredit
+      definition: The number of modular credits (MCs) a module is worth, represented as a string.
+      tags: [module, credit]
+    - term: semester
+      definition: A numeric semester within an academic year (1 or 2 for regular semesters, 3 and 4 for special terms).
+      tags: [time, enum]
+    - term: semesterData
+      definition: Per-semester offering details for a module, including exam date, exam duration, and timetable.
+      tags: [module, schedule]
+    - term: timetable
+      definition: The list of scheduled lessons offered for a module in a given semester.
+      tags: [schedule, lesson]
+    - term: lessonType
+      definition: The category of a lesson, such as Lecture, Tutorial, or Laboratory; students attend one class number per lesson type.
+      tags: [lesson, classification]
+    - term: classNo
+      definition: The class number distinguishing parallel groups of the same lesson type within a module.
+      tags: [lesson, identifier]
+    - term: weeks
+      definition: The teaching weeks a lesson occurs, expressed either as an array of week numbers or as a WeekRange with start, end, and interval.
+      tags: [schedule, lesson]
+    - term: venue
+      definition: The physical location code where a lesson is held, such as COM1-0208.
+      tags: [location, lesson]
+    - term: workload
+      definition: The expected weekly hours per workload component (lecture, tutorial, lab, project, preparation) as a numeric array, or a free-text description.
+      tags: [module, effort]
+    - term: prerequisite
+      definition: Modules or conditions that must be completed before enrolling in a module.
+      tags: [module, requirement]
+    - term: preclusion
+      definition: Modules whose content overlaps such that a student may not take both for credit.
+      tags: [module, requirement]
+    - term: faculty
+      definition: The NUS faculty or college that offers a module, such as Computing.
+      tags: [organization]
+    - term: department
+      definition: The academic department within a faculty that owns a module, such as Computer Science.
+      tags: [organization]
+    - term: availability
+      definition: A map of half-hourly time slots to occupancy status for a venue on a given day.
+      tags: [location, schedule]

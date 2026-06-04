@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/json-structure/nus-module-structure.json",
+  "name": "NusModule",
+  "description": "JSON Structure for a full NUS module record from the NUSMods API (/{acadYear}/modules/{moduleCode}.json).",
+  "type": "object",
+  "properties": {
+    "acadYear": { "type": "string" },
+    "moduleCode": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "moduleCredit": { "type": "string" },
+    "department": { "type": "string" },
+    "faculty": { "type": "string" },
+    "prerequisite": { "type": "string" },
+    "preclusion": { "type": "string" },
+    "corequisite": { "type": "string" },
+    "workload": {
+      "type": "array",
+      "items": { "type": "number" }
+    },
+    "semesterData": {
+      "type": "array",
+      "items": { "type": { "$ref": "#/definitions/SemesterData" } }
+    }
+  },
+  "required": [
+    "acadYear",
+    "moduleCode",
+    "title",
+    "description",
+    "moduleCredit",
+    "department",
+    "faculty",
+    "workload",
+    "semesterData"
+  ],
+  "definitions": {
+    "SemesterData": {
+      "type": "object",
+      "properties": {
+        "semester": { "type": "int32" },
+        "examDate": { "type": "string", "format": "date-time" },
+        "examDuration": { "type": "int32" },
+        "timetable": {
+          "type": "array",
+          "items": { "type": { "$ref": "#/definitions/Lesson" } }
+        }
+      },
+      "required": ["semester"]
+    },
+    "Lesson": {
+      "type": "object",
+      "properties": {
+        "classNo": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "venue": { "type": "string" },
+        "day": { "type": "string" },
+        "lessonType": { "type": "string" },
+        "size": { "type": "int32" },
+        "weeks": {
+          "type": "array",
+          "items": { "type": "int32" }
+        }
+      },
+      "required": ["classNo", "startTime", "endTime", "weeks", "venue", "lessonType"]
+    }
+  }
+}

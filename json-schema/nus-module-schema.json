@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/json-schema/nus-module-schema.json",
+  "title": "NUS Module",
+  "description": "A full NUS module record as returned by the NUSMods API endpoint /{acadYear}/modules/{moduleCode}.json. Derived from the NUSMods OpenAPI 3.0.1 Module schema.",
+  "type": "object",
+  "required": [
+    "acadYear",
+    "description",
+    "title",
+    "department",
+    "faculty",
+    "workload",
+    "moduleCredit",
+    "moduleCode",
+    "semesterData"
+  ],
+  "properties": {
+    "acadYear": { "type": "string", "examples": ["2018/2019"] },
+    "moduleCode": { "type": "string", "examples": ["CS2100"] },
+    "title": { "type": "string", "examples": ["Computer Organisation"] },
+    "description": { "type": "string" },
+    "moduleCredit": { "type": "string", "examples": ["4"] },
+    "department": { "type": "string", "examples": ["Computer Science"] },
+    "faculty": { "type": "string", "examples": ["Computing"] },
+    "workload": {
+      "description": "Either an array of weekly hours per workload component or a free-text description.",
+      "oneOf": [
+        { "type": "array", "items": { "type": "number" } },
+        { "type": "string" }
+      ]
+    },
+    "prerequisite": { "type": "string", "examples": ["CS1010 or its equivalent"] },
+    "preclusion": { "type": "string" },
+    "corequisite": { "type": "string" },
+    "semesterData": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SemesterData" }
+    }
+  },
+  "$defs": {
+    "SemesterData": {
+      "type": "object",
+      "required": ["semester"],
+      "properties": {
+        "semester": { "type": "number", "examples": [1] },
+        "examDate": { "type": "string", "format": "date-time" },
+        "examDuration": { "type": "number", "examples": [120] },
+        "timetable": { "type": "array", "items": { "$ref": "#/$defs/Lesson" } }
+      }
+    },
+    "Lesson": {
+      "type": "object",
+      "required": ["classNo", "startTime", "endTime", "weeks", "venue", "lessonType"],
+      "properties": {
+        "classNo": { "type": "string", "examples": ["08"] },
+        "startTime": { "type": "string", "examples": ["1100"] },
+        "endTime": { "type": "string", "examples": ["1200"] },
+        "weeks": {
+          "oneOf": [
+            { "$ref": "#/$defs/WeekRange" },
+            { "type": "array", "items": { "type": "number" } }
+          ]
+        },
+        "venue": { "type": "string", "examples": ["COM1-0208"] },
+        "day": { "type": "string", "examples": ["Friday"] },
+        "lessonType": { "type": "string", "examples": ["Tutorial"] },
+        "size": { "type": "number", "examples": [30] }
+      }
+    },
+    "WeekRange": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": "string", "format": "date" },
+        "end": { "type": "string", "format": "date" },
+        "weekInterval": { "type": "number", "default": 1 },
+        "weeks": { "type": "array", "items": { "type": "number" } }
+      }
+    }
+  }
+}

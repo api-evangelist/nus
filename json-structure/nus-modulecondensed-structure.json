@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/json-structure/nus-modulecondensed-structure.json",
+  "name": "NusModuleCondensed",
+  "description": "JSON Structure for a condensed NUS module entry from the NUSMods API module list (/{acadYear}/moduleList.json).",
+  "type": "object",
+  "properties": {
+    "moduleCode": { "type": "string" },
+    "title": { "type": "string" },
+    "semesters": {
+      "type": "array",
+      "items": { "type": "int32" }
+    }
+  },
+  "required": ["moduleCode", "title", "semesters"]
+}

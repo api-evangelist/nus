@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/json-schema/nus-modulecondensed-schema.json",
+  "title": "NUS ModuleCondensed",
+  "description": "Condensed module entry as returned in the array from the NUSMods API endpoint /{acadYear}/moduleList.json. Derived from the NUSMods OpenAPI 3.0.1 ModuleCondensed schema.",
+  "type": "object",
+  "required": ["moduleCode", "title", "semesters"],
+  "properties": {
+    "moduleCode": { "type": "string", "examples": ["EL1101E"] },
+    "title": { "type": "string", "examples": ["The Nature of Language"] },
+    "semesters": {
+      "type": "array",
+      "items": { "type": "number", "enum": [1, 2, 3, 4] },
+      "examples": [[1, 2]]
+    }
+  }
+}

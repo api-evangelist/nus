@@ -72,6 +72,28 @@ apis:
         url: https://github.com/nusmodifications/nusmods-api/blob/master/README.md
       - type: GitHub
         url: https://github.com/nusmodifications/nusmods
+      - type: OpenAPI
+        url: openapi/nus-nusmods.yaml
+      - type: JSONSchema
+        url: json-schema/nus-module-schema.json
+      - type: JSONSchema
+        url: json-schema/nus-modulecondensed-schema.json
+      - type: JSONSchema
+        url: json-schema/nus-venueinformation-schema.json
+      - type: x-json-structure
+        url: json-structure/nus-module-structure.json
+      - type: x-json-structure
+        url: json-structure/nus-modulecondensed-structure.json
+      - type: x-example
+        url: examples/nus-module-example.json
+      - type: x-example
+        url: examples/nus-modulelist-example.json
+      - type: x-spectral-rules
+        url: rules/nus-rules.yml
+      - type: x-vocabulary
+        url: vocabulary/nus-vocabulary.yml
+      - type: x-json-ld
+        url: json-ld/nus-context.jsonld
 common:
   - type: Website
     url: https://nus.edu.sg/
