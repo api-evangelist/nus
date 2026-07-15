@@ -95,6 +95,8 @@ apis:
       - type: x-json-ld
         url: json-ld/nus-context.jsonld
 common:
+  - type: AgenticAccess
+    url: agentic-access/nus-agentic-access.yml
   - type: DomainSecurity
     url: security/nus-domain-security.yml
   - type: Website
