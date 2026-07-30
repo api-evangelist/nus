@@ -13,9 +13,21 @@ description: >-
   administrative and student-facing systems sit behind ADFS/SAML single sign-on
   and are not publicly documented.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Free
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/nus.png
 url: https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/apis.yml
 tags:
   - Education
@@ -29,71 +41,108 @@ created: '2026-06-03'
 modified: '2026-06-03'
 specificationVersion: '0.19'
 apis:
-  - aid: nus:scholarbank-rest
-    name: ScholarBank@NUS DSpace REST API
-    description: >-
-      ScholarBank@NUS is the digital institutional repository of the National
-      University of Singapore, built on DSpace 7.6. Its HAL-style REST API
-      exposes communities, collections, items, bitstreams, and metadata for the
-      university's scholarly output, theses, and research data underpinning
-      published findings.
-    humanURL: https://scholarbank.nus.edu.sg/
-    baseURL: https://scholarbank.nus.edu.sg/server/api
-    tags: [ Repository, Research, Open Access, DSpace, Scholarly ]
-    properties:
-      - type: Documentation
-        url: https://scholarbank.nus.edu.sg/server/api
-  - aid: nus:scholarbank-oai
-    name: ScholarBank@NUS OAI-PMH Interface
-    description: >-
-      OAI-PMH metadata harvesting endpoint for ScholarBank@NUS, supporting
-      standard verbs (Identify, ListRecords, ListMetadataFormats, GetRecord)
-      for harvesting Dublin Core and other metadata formats from the NUS
-      institutional repository.
-    humanURL: https://scholarbank.nus.edu.sg/
-    baseURL: https://scholarbank.nus.edu.sg/oai/request
-    tags: [ Repository, OAI-PMH, Metadata, Harvesting, Open Access ]
-    properties:
-      - type: Documentation
-        url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
-  - aid: nus:nusmods
-    name: NUSMods API (Unofficial / Community)
-    description: >-
-      Community-maintained, unofficial JSON API providing NUS module, course,
-      and timetable data normalized by the NUSModifications open-source project.
-      Provides module lists, module details, faculty/department listings, and
-      lesson types organized by academic year and semester. Not an official NUS
-      service.
-    humanURL: https://github.com/nusmodifications/nusmods
-    baseURL: https://api.nusmods.com/v2/
-    tags: [ Courses, Modules, Timetable, Community, Unofficial ]
-    properties:
-      - type: Documentation
-        url: https://github.com/nusmodifications/nusmods-api/blob/master/README.md
-      - type: GitHub
-        url: https://github.com/nusmodifications/nusmods
-      - type: OpenAPI
-        url: openapi/nus-nusmods.yaml
-      - type: JSONSchema
-        url: json-schema/nus-module-schema.json
-      - type: JSONSchema
-        url: json-schema/nus-modulecondensed-schema.json
-      - type: JSONSchema
-        url: json-schema/nus-venueinformation-schema.json
-      - type: x-json-structure
-        url: json-structure/nus-module-structure.json
-      - type: x-json-structure
-        url: json-structure/nus-modulecondensed-structure.json
-      - type: x-example
-        url: examples/nus-module-example.json
-      - type: x-example
-        url: examples/nus-modulelist-example.json
-      - type: x-spectral-rules
-        url: rules/nus-rules.yml
-      - type: x-vocabulary
-        url: vocabulary/nus-vocabulary.yml
-      - type: x-json-ld
-        url: json-ld/nus-context.jsonld
+- aid: nus:scholarbank-rest
+  name: ScholarBank@NUS DSpace REST API
+  description: >-
+    ScholarBank@NUS is the digital institutional repository of the National University of Singapore, built
+    on DSpace 7.6. Its HAL-style REST API exposes communities, collections, items, bitstreams, and metadata
+    for the university's scholarly output, theses, and research data underpinning published findings.
+  humanURL: https://scholarbank.nus.edu.sg/
+  baseURL: https://scholarbank.nus.edu.sg/server/api
+  tags:
+  - Repository
+  - Research
+  - Open Access
+  - DSpace
+  - Scholarly
+  properties:
+  - type: Documentation
+    url: https://scholarbank.nus.edu.sg/server/api
+- aid: nus:scholarbank-oai
+  name: ScholarBank@NUS OAI-PMH Interface
+  description: >-
+    OAI-PMH metadata harvesting endpoint for ScholarBank@NUS, supporting standard verbs (Identify, ListRecords,
+    ListMetadataFormats, GetRecord) for harvesting Dublin Core and other metadata formats from the NUS
+    institutional repository.
+  humanURL: https://scholarbank.nus.edu.sg/
+  baseURL: https://scholarbank.nus.edu.sg/oai/request
+  tags:
+  - Repository
+  - OAI-PMH
+  - Metadata
+  - Harvesting
+  - Open Access
+  properties:
+  - type: Documentation
+    url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+- aid: nus:nus-modules-api
+  name: National University of Singapore Modules API
+  description: The Modules API from National University of Singapore — 4 operation(s) for modules.
+  humanURL: https://scholarbank.nus.edu.sg/
+  baseURL: https://scholarbank.nus.edu.sg/server/api
+  tags:
+  - Modules
+  properties:
+  - type: OpenAPI
+    url: openapi/nus-modules-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/nusmodifications/nusmods-api/blob/master/README.md
+  - type: GitHub
+    url: https://github.com/nusmodifications/nusmods
+  - type: JSONSchema
+    url: json-schema/nus-module-schema.json
+  - type: JSONSchema
+    url: json-schema/nus-modulecondensed-schema.json
+  - type: JSONSchema
+    url: json-schema/nus-venueinformation-schema.json
+  - type: x-json-structure
+    url: json-structure/nus-module-structure.json
+  - type: x-json-structure
+    url: json-structure/nus-modulecondensed-structure.json
+  - type: x-example
+    url: examples/nus-module-example.json
+  - type: x-example
+    url: examples/nus-modulelist-example.json
+  - type: x-spectral-rules
+    url: rules/nus-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/nus-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/nus-context.jsonld
+- aid: nus:nus-venues-api
+  name: National University of Singapore Venues API
+  description: The Venues API from National University of Singapore — 2 operation(s) for venues.
+  humanURL: https://scholarbank.nus.edu.sg/
+  baseURL: https://scholarbank.nus.edu.sg/server/api
+  tags:
+  - Venues
+  properties:
+  - type: OpenAPI
+    url: openapi/nus-venues-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/nusmodifications/nusmods-api/blob/master/README.md
+  - type: GitHub
+    url: https://github.com/nusmodifications/nusmods
+  - type: JSONSchema
+    url: json-schema/nus-module-schema.json
+  - type: JSONSchema
+    url: json-schema/nus-modulecondensed-schema.json
+  - type: JSONSchema
+    url: json-schema/nus-venueinformation-schema.json
+  - type: x-json-structure
+    url: json-structure/nus-module-structure.json
+  - type: x-json-structure
+    url: json-structure/nus-modulecondensed-structure.json
+  - type: x-example
+    url: examples/nus-module-example.json
+  - type: x-example
+    url: examples/nus-modulelist-example.json
+  - type: x-spectral-rules
+    url: rules/nus-rules.yml
+  - type: x-vocabulary
+    url: vocabulary/nus-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/nus-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/nus-agentic-access.yml
