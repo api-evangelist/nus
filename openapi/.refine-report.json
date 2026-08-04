@@ -1,0 +1,19 @@
+{
+  "provider": "nus",
+  "sources": [
+    "nus-modules-api-openapi.yml",
+    "nus-venues-api-openapi.yml"
+  ],
+  "outputs": [
+    "nus-modules-api-openapi.yml",
+    "nus-venues-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "nus-modules-api-openapi.yml: dangling $ref: #/components/responses/404",
+    "nus-venues-api-openapi.yml: dangling $ref: #/components/responses/404"
+  ],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
