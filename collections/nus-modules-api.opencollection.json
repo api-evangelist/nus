@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUSMods Modules API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Modules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get summaries of all modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nusmods.com/v2/:acadYear/moduleList.json",
+            "params": [
+              {
+                "name": "acadYear",
+                "value": "",
+                "type": "path",
+                "description": "academic year, with the slash (/) replaced by a dash"
+              }
+            ]
+          },
+          "docs": "Get the module code, title and semesters which the module is available in for all modules in a year. This is useful for tasks that only require a minimal set of information, such as simple search, autocompleting module code and titles, and checking if a module code is valid.\n\nNUSMods uses this information to validate module codes and for searching.\n"
+        },
+        {
+          "info": {
+            "name": "Get detailed information about all modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nusmods.com/v2/:acadYear/moduleInformation.json",
+            "params": [
+              {
+                "name": "acadYear",
+                "value": "",
+                "type": "path",
+                "description": "academic year, with the slash (/) replaced by a dash"
+              }
+            ]
+          },
+          "docs": "Get all information about modules except for timetable and prereq tree in a year. This is compact enough to be loaded and filtered in browsers without lag and is useful for faceted search and detailed module listing.\n\nIn AY2018/2019, NUSMods used this information for the detailed module search page. This endpoint will no longer be present starting in AY2019/2020. Please use the moduleInfo.json endpoint instead, which contains modules which are not offered in the specified academic year, but is o"
+        },
+        {
+          "info": {
+            "name": "Get detailed information about all modules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nusmods.com/v2/:acadYear/moduleInfo.json",
+            "params": [
+              {
+                "name": "acadYear",
+                "value": "",
+                "type": "path",
+                "description": "academic year, with the slash (/) replaced by a dash"
+              }
+            ]
+          },
+          "docs": "Get all information about modules except for timetable and prereq tree in a year. This is compact enough to be loaded and filtered in browsers without lag and is useful for faceted search and detailed module listing.\n\nNUSMods feeds this information into an Elasticsearch search server for the detailed module search page.\n"
+        },
+        {
+          "info": {
+            "name": "Get all information about a specific module",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nusmods.com/v2/:acadYear/modules/:moduleCode.json",
+            "params": [
+              {
+                "name": "acadYear",
+                "value": "",
+                "type": "path",
+                "description": "academic year, with the slash (/) replaced by a dash"
+              },
+              {
+                "name": "moduleCode",
+                "value": "",
+                "type": "path",
+                "description": "module code"
+              }
+            ]
+          },
+          "docs": "Get all information available for a specific module including prerequite tree and timetable.\n\nNUSMods uses this on the module information page.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

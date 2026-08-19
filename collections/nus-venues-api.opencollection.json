@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NUSMods Modules Venues API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Venues",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of all venues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nusmods.com/v2/:acadYear/semesters/:semester/venues.json",
+            "params": [
+              {
+                "name": "acadYear",
+                "value": "",
+                "type": "path",
+                "description": "academic year, with the slash (/) replaced by a dash"
+              },
+              {
+                "name": "semester",
+                "value": "",
+                "type": "path",
+                "description": "semester, with 1 and 2 representing semester 1 and 2, and 3, 4 representing special term 1 and 2"
+              }
+            ]
+          },
+          "docs": "Get a list of all venues, including lecture theatres, seminar rooms, laboratories, etc. used in the given semester's classes. This endpoint only returns an array of names, and is useful for searching and autocompletion.\n"
+        },
+        {
+          "info": {
+            "name": "Get detailed information on all venues",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.nusmods.com/v2/:acadYear/semesters/:semester/venueInformation.json",
+            "params": [
+              {
+                "name": "acadYear",
+                "value": "",
+                "type": "path",
+                "description": "academic year, with the slash (/) replaced by a dash"
+              },
+              {
+                "name": "semester",
+                "value": "",
+                "type": "path",
+                "description": "semester, with 1 and 2 representing semester 1 and 2, and 3, 4 representing special term 1 and 2"
+              }
+            ]
+          },
+          "docs": "Get detailed venue information including classes and occupancy for every venue. This is useful for displaying a timetable of the given venue as well as for checking if a venue is occupied at any given time.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
