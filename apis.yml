@@ -68,6 +68,12 @@ apis:
   - Identity Federation
   - Authentication
   - OpenID Connect
+  - SAML
+  - Single Sign-On
+  tags_raw:
+  - Identity Federation
+  - Authentication
+  - OpenID Connect
   - OAuth
   - SAML
   - Single Sign-On
@@ -209,6 +215,11 @@ apis:
   humanURL: https://nusmods.com/
   baseURL: https://api.nusmods.com/v2
   tags:
+  - Course Catalog
+  - Timetable
+  - Student Built
+  - Open-Source
+  tags_raw:
   - Course Catalog
   - Timetable
   - Student Built
