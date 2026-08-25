@@ -1,0 +1,15 @@
+{
+  "repo": "nus",
+  "feeds": [
+    {
+      "source": "https://news.nus.edu.sg/nus-makes-ai-courses-compulsory-gives-free-access-to-chatgpt-edu/",
+      "error": "URLError"
+    },
+    {
+      "source": "https://news.nus.edu.sg/",
+      "error": "URLError"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-22T20:20:02Z"
+}
