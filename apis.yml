@@ -53,55 +53,14 @@ specificationVersion: '0.23'
 x-type: university
 x-category: Public Research University
 apis:
-- aid: nus:identity
-  name: NUS Federated Identity Service (VAFS)
-  description: >-
-    The National University of Singapore's own identity provider, and the only substantial
-    machine-readable API surface the institution operates itself. Publishes an OpenID Connect
-    discovery document, a JSON Web Key Set, and signed SAML 2.0 / WS-Federation metadata, all
-    anonymously readable. Fronts OAuth 2.0 authorization, token, userinfo, device-code and
-    logout endpoints. Relying parties are registered by NUS Information Technology; there is no
-    public client registration and no self-service path.
-  humanURL: https://nusit.nus.edu.sg/
-  baseURL: https://vafs.nus.edu.sg/adfs
-  tags:
-  - Identity Federation
-  - Authentication
-  - OpenID Connect
-  - SAML
-  - Single Sign-On
-  tags_raw:
-  - Identity Federation
-  - Authentication
-  - OpenID Connect
-  - OAuth
-  - SAML
-  - Single Sign-On
-  properties:
-  - type: OpenAPI
-    url: openapi/nus-identity-openapi.yml
-  - type: Documentation
-    url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
-  - type: IdentityFederation
-    url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
-  - type: Authentication
-    url: authentication/nus-authentication.yml
-  - type: Scopes
-    url: scopes/nus-scopes.yml
-  - type: JSONSchema
-    url: json-schema/nus-openid-configuration-schema.json
-  x-operator: institution
-  x-operator-evidence: >-
-    TLS certificate subject O=National University of Singapore (DigiCert EV); A record
-    137.132.21.18 in NUS address space; SAML entityID under nus.edu.sg.
 - aid: nus:nextbus
   name: NUS NextBus (Internal Shuttle Bus) API
   description: >-
-    The API behind the NUS internal shuttle bus service — bus stops, services and arrival times
-    across the Kent Ridge and Bukit Timah campuses. Institution-operated and live, but gated
-    behind HTTP Basic credentials that NUS does not issue to the public, so no schema, response
-    shape or operation list could be observed. Recorded because a campus transit API is one of
-    the few genuinely institution-run surface classes a university has, and this one is real.
+    The API behind the NUS internal shuttle bus service — bus stops, services and arrival times across
+    the Kent Ridge and Bukit Timah campuses. Institution-operated and live, but gated behind HTTP Basic
+    credentials that NUS does not issue to the public, so no schema, response shape or operation list
+    could be observed. Recorded because a campus transit API is one of the few genuinely institution-run
+    surface classes a university has, and this one is real.
   humanURL: https://nusit.nus.edu.sg/
   baseURL: https://nnextbus.nus.edu.sg/
   tags:
@@ -114,19 +73,18 @@ apis:
     url: authentication/nus-authentication.yml
   x-operator: institution
   x-operator-evidence: >-
-    TLS certificate subject O=National University of Singapore (Sectigo OV); A record
-    137.132.173.15 in NUS address space.
+    TLS certificate subject O=National University of Singapore (Sectigo OV); A record 137.132.173.15 in
+    NUS address space.
   x-access: gated
   x-status: 401 Unauthorized, WWW-Authenticate Basic (probed 2026-08-19)
 - aid: nus:scholarbank-rest
   name: ScholarBank@NUS DSpace REST API
   description: >-
-    The HAL-style REST API of ScholarBank@NUS, the university's institutional repository —
-    communities, collections, items, bitstreams and a 485-field metadata registry covering the
-    university's scholarly output, theses and research data. The content, the Handle prefix
-    10635 and the administrative contact scholarbank@nus.edu.sg are NUS's; the DSpace 7.6
-    software and the hosting are Atmire Open Repository's. The contract is the vendor's and is
-    deliberately not saved under this institution.
+    The HAL-style REST API of ScholarBank@NUS, the university's institutional repository — communities,
+    collections, items, bitstreams and a 485-field metadata registry covering the university's scholarly
+    output, theses and research data. The content, the Handle prefix 10635 and the administrative contact
+    scholarbank@nus.edu.sg are NUS's; the DSpace 7.6 software and the hosting are Atmire Open Repository's.
+    The contract is the vendor's and is deliberately not saved under this institution.
   humanURL: https://scholarbank.nus.edu.sg/
   baseURL: https://scholarbank.nus.edu.sg/server/api
   tags:
@@ -139,14 +97,15 @@ apis:
   - type: Documentation
     url: https://scholarbank.nus.edu.sg/server/api
   x-operator: tenant
-  x-operator-evidence: scholarbank.nus.edu.sg CNAMEs to nusor.cname.openrepository.com (Atmire Open Repository).
+  x-operator-evidence: >-
+    scholarbank.nus.edu.sg CNAMEs to nusor.cname.openrepository.com (Atmire Open Repository).
 - aid: nus:scholarbank-oai
   name: ScholarBank@NUS OAI-PMH Interface
   description: >-
-    OAI-PMH 2.0 metadata harvesting endpoint for ScholarBank@NUS, advertising twelve metadata
-    formats including oai_dc, qdc, mods, mets, marc, etdms and uketd_dc, with an earliest
-    datestamp of 2006-11-09. The interface is conformant apart from one live defect: the Identify
-    response returns an unsubstituted configuration template as its repositoryIdentifier.
+    OAI-PMH 2.0 metadata harvesting endpoint for ScholarBank@NUS, advertising twelve metadata formats
+    including oai_dc, qdc, mods, mets, marc, etdms and uketd_dc, with an earliest datestamp of 2006-11-09.
+    The interface is conformant apart from one live defect: the Identify response returns an unsubstituted
+    configuration template as its repositoryIdentifier.
   humanURL: https://scholarbank.nus.edu.sg/
   baseURL: https://scholarbank.nus.edu.sg/oai/request
   tags:
@@ -165,10 +124,9 @@ apis:
 - aid: nus:canvas
   name: NUS Canvas LMS API
   description: >-
-    The learning management system for NUS courses, running on Instructure's Canvas as a vanity
-    tenant. The REST API is live and returns a structured 401 to unauthenticated callers; the
-    LTI 1.3 tool-platform JWKS is publicly readable. NUS's courses and students, Instructure's
-    contract and engineering.
+    The learning management system for NUS courses, running on Instructure's Canvas as a vanity tenant.
+    The REST API is live and returns a structured 401 to unauthenticated callers; the LTI 1.3 tool-platform
+    JWKS is publicly readable. NUS's courses and students, Instructure's contract and engineering.
   humanURL: https://canvas.nus.edu.sg/
   baseURL: https://canvas.nus.edu.sg/api/v1
   tags:
@@ -180,14 +138,14 @@ apis:
   - type: Documentation
     url: https://canvas.nus.edu.sg/api/lti/security/jwks
   x-operator: tenant
-  x-operator-evidence: canvas.nus.edu.sg CNAMEs to nus-vanity.instructure.com; TLS certificate carries no organization.
+  x-operator-evidence: >-
+    canvas.nus.edu.sg CNAMEs to nus-vanity.instructure.com; TLS certificate carries no organization.
 - aid: nus:blog-wp
   name: Blog.nus WordPress REST API
   description: >-
-    The NUS academic, educational, research and administrative blogging platform exposes a full
-    WordPress REST API with eleven namespaces and 190 routes, anonymously readable. Runs on
-    CampusPress managed WordPress; the contract is WordPress core's and applies identically to
-    every CampusPress customer.
+    The NUS academic, educational, research and administrative blogging platform exposes a full WordPress
+    REST API with eleven namespaces and 190 routes, anonymously readable. Runs on CampusPress managed
+    WordPress; the contract is WordPress core's and applies identically to every CampusPress customer.
   humanURL: https://blog.nus.edu.sg/
   baseURL: https://blog.nus.edu.sg/wp-json
   tags:
@@ -199,19 +157,19 @@ apis:
   - type: Documentation
     url: https://blog.nus.edu.sg/wp-json/
   x-operator: tenant
-  x-operator-evidence: blog.nus.edu.sg CNAMEs to c1141.campuspress.com; Let's Encrypt DV certificate with no organization.
+  x-operator-evidence: >-
+    blog.nus.edu.sg CNAMEs to c1141.campuspress.com; Let's Encrypt DV certificate with no organization.
 - aid: nus:nusmods
   name: NUSMods API (student-operated, not endorsed)
   description: >-
-    The only public machine-readable description of NUS course data that exists — module lists,
-    module information, prerequisite trees, timetables and venue occupancy, published as an
-    OpenAPI 3.0.1 document with academic-year path versioning. It is built and run by
-    NUSModifications, a student organisation, on nusmods.com, and its own specification names
-    mods@nusmods.com as the contact. Its description states the data is scraped daily from
-    official APIs provided by the NUS Registrar's Office — meaning NUS does operate a course API,
-    but not one the public can reach. No evidence of institutional endorsement or operation was
-    found, so this is recorded as a relationship and its artifacts are deliberately not saved
-    under NUS.
+    The only public machine-readable description of NUS course data that exists — module lists, module
+    information, prerequisite trees, timetables and venue occupancy, published as an OpenAPI 3.0.1 document
+    with academic-year path versioning. It is built and run by NUSModifications, a student organisation,
+    on nusmods.com, and its own specification names mods@nusmods.com as the contact. Its description states
+    the data is scraped daily from official APIs provided by the NUS Registrar's Office — meaning NUS
+    does operate a course API, but not one the public can reach. No evidence of institutional endorsement
+    or operation was found, so this is recorded as a relationship and its artifacts are deliberately not
+    saved under NUS.
   humanURL: https://nusmods.com/
   baseURL: https://api.nusmods.com/v2
   tags:
@@ -231,16 +189,16 @@ apis:
     url: https://github.com/nusmodifications
   x-operator: tenant
   x-operator-evidence: >-
-    servers[] api.nusmods.com (non-NUS registrable domain); info.contact.email mods@nusmods.com;
-    operated by the NUSModifications student organisation under MIT licence.
+    servers[] api.nusmods.com (non-NUS registrable domain); info.contact.email mods@nusmods.com; operated
+    by the NUSModifications student organisation under MIT licence.
   x-endorsement: none_found
 - aid: nus:sgaf
   name: NUS entry in the Singapore Access Federation
   description: >-
-    NUS is one of fourteen identity providers registered in the Singapore Access Federation,
-    which SingAREN operates and which interfederates with eduGAIN. The entityID NUS is registered
-    under is a SimpleSAMLphp proxy on singaren.net.sg, so the federation entry itself is operated
-    by SingAREN on the university's behalf. A real institutional fact; not NUS's engineering.
+    NUS is one of fourteen identity providers registered in the Singapore Access Federation, which SingAREN
+    operates and which interfederates with eduGAIN. The entityID NUS is registered under is a SimpleSAMLphp
+    proxy on singaren.net.sg, so the federation entry itself is operated by SingAREN on the university's
+    behalf. A real institutional fact; not NUS's engineering.
   humanURL: https://www.singaren.net.sg/network-services/singapore-access-federation-sgaf/
   baseURL: https://nusaz.singaren.net.sg/simplesaml/saml2/idp/metadata.php
   tags:
@@ -253,6 +211,66 @@ apis:
     url: identity-federation/nus-identity-federation.yml
   x-operator: tenant
   x-operator-evidence: entityID hosted on singaren.net.sg, operated by SingAREN, not by NUS.
+- aid: nus:nus-authorization-api
+  name: National University of Singapore Authorization API
+  description: OAuth 2.0 / OpenID Connect authorization and token issuance.
+  humanURL: https://nusit.nus.edu.sg/
+  baseURL: https://vafs.nus.edu.sg/adfs
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/nus-authorization-api-openapi.yml
+  - type: Documentation
+    url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  - type: IdentityFederation
+    url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  - type: Authentication
+    url: authentication/nus-authentication.yml
+  - type: Scopes
+    url: scopes/nus-scopes.yml
+  - type: JSONSchema
+    url: json-schema/nus-openid-configuration-schema.json
+- aid: nus:nus-discovery-api
+  name: National University of Singapore Discovery API
+  description: Machine-readable metadata describing the identity service and its signing keys.
+  humanURL: https://nusit.nus.edu.sg/
+  baseURL: https://vafs.nus.edu.sg/adfs
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/nus-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  - type: IdentityFederation
+    url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  - type: Authentication
+    url: authentication/nus-authentication.yml
+  - type: Scopes
+    url: scopes/nus-scopes.yml
+  - type: JSONSchema
+    url: json-schema/nus-openid-configuration-schema.json
+- aid: nus:nus-session-api
+  name: National University of Singapore Session API
+  description: End-user claims and session termination.
+  humanURL: https://nusit.nus.edu.sg/
+  baseURL: https://vafs.nus.edu.sg/adfs
+  tags:
+  - Session
+  properties:
+  - type: OpenAPI
+    url: openapi/nus-session-api-openapi.yml
+  - type: Documentation
+    url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  - type: IdentityFederation
+    url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  - type: Authentication
+    url: authentication/nus-authentication.yml
+  - type: Scopes
+    url: scopes/nus-scopes.yml
+  - type: JSONSchema
+    url: json-schema/nus-openid-configuration-schema.json
 common:
 - type: Website
   url: https://nus.edu.sg/
