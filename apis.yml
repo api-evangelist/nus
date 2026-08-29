@@ -284,6 +284,9 @@ apis:
   - type: JSONSchema
     url: json-schema/nus-openid-configuration-schema.json
 common:
+- type: CapabilityMap
+  url: capabilities/nus-capability-edges.yml
+  name: National University of Singapore Business Capability Map
 - type: Website
   url: https://nus.edu.sg/
 - type: IdentityFederation

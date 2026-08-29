@@ -1,0 +1,37 @@
+slug: nus
+provider: National University of Singapore
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Education
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Authorization
+  spec_file: nus-authorization-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /adfs/oauth2/authorize/  authorize  OAuth 2.0 / OIDC authorization endpoint; POST /adfs/oauth2/token/  token  OAuth
+    2.0 token endpoint
+  reason: The operations are the OAuth2/OIDC authorization, token and device-code endpoints of NUS's own
+    ADFS federated identity service — federation and access token issuance, i.e. Identity & Access Management.
+    Not an education-specific capability despite the university operator.
+- tag: Session
+  spec_file: nus-session-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /adfs/userinfo  userinfo  UserInfo endpoint; GET /adfs/oauth2/logout  endSession  End
+    session / front-channel logout endpoint
+  reason: UserInfo claim retrieval and front-channel logout are authenticated-session operations of the
+    federated identity provider — Identity & Access Management, not student records despite the university
+    context.
