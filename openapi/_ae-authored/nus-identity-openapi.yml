@@ -1,0 +1,408 @@
+openapi: 3.0.3
+info:
+  title: NUS Identity Provider API (vafs.nus.edu.sg)
+  version: '2026-08-19'
+  description: |
+    The National University of Singapore operates its own federated identity service at
+    `vafs.nus.edu.sg` ("NUS VAFS" — the university's Active Directory Federation Services
+    deployment). It is the one substantial machine-readable, institution-operated API surface
+    NUS publishes to the open internet, and it is the front door to essentially every gated
+    NUS system.
+
+    The host is unambiguously NUS's own engineering, not a vendor's:
+
+      * `vafs.nus.edu.sg` resolves inside NUS's own address space (137.132.21.18).
+      * Its TLS certificate is an Extended Validation certificate issued to
+        `jurisdictionC=SG, businessCategory=Private Organization, serialNumber=200604346E,
+        O=National University of Singapore, CN=vafs.nus.edu.sg` — NUS is the validated
+        organization, not a hosting provider.
+      * The SAML entityID it asserts is `https://vafs.nus.edu.sg/adfs/services/trust`.
+
+    This document is DERIVED — every path, parameter, scope and response below was read out of
+    the institution's own live OpenID Connect discovery document at
+    `https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration` and its JWKS at
+    `https://vafs.nus.edu.sg/adfs/discovery/keys`, both fetched 2026-08-19. NUS does not itself
+    publish an OpenAPI description; nothing here is invented, but the OpenAPI packaging is
+    API Evangelist's, not the university's.
+
+    The service speaks OpenID Connect 1.0 / OAuth 2.0, SAML 2.0, WS-Federation and WS-Trust
+    from the same endpoint family. The SAML half is described in
+    `identity-federation/nus-identity-federation.yml`.
+  contact:
+    name: NUS Information Technology
+    url: https://nusit.nus.edu.sg/
+  termsOfService: https://nus.edu.sg/ormc/personal-data-protection/nus-privacy-notice
+  x-operator: institution
+  x-operator-evidence:
+    - 'TLS certificate subject O=National University of Singapore (DigiCert EV RSA CA G2)'
+    - 'A record 137.132.21.18 within NUS-assigned address space'
+    - 'SAML entityID https://vafs.nus.edu.sg/adfs/services/trust'
+  x-method: derived
+  x-source: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  x-generated: '2026-08-19'
+servers:
+  - url: https://vafs.nus.edu.sg
+    description: NUS federated identity service (production)
+tags:
+  - name: Discovery
+    description: Machine-readable metadata describing the identity service and its signing keys.
+  - name: Authorization
+    description: OAuth 2.0 / OpenID Connect authorization and token issuance.
+  - name: Session
+    description: End-user claims and session termination.
+paths:
+  /adfs/.well-known/openid-configuration:
+    get:
+      tags: [Discovery]
+      operationId: getOpenIdConfiguration
+      summary: OpenID Connect discovery document
+      description: >-
+        Returns the OpenID Provider metadata for the NUS identity service, per
+        OpenID Connect Discovery 1.0. Publicly readable, no authentication.
+      security: []
+      responses:
+        '200':
+          description: OpenID Provider metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenIdConfiguration'
+  /adfs/discovery/keys:
+    get:
+      tags: [Discovery]
+      operationId: getJwks
+      summary: JSON Web Key Set
+      description: >-
+        Returns the RSA public keys used to verify ID tokens and access tokens issued by
+        this provider (RFC 7517). Publicly readable, no authentication.
+      security: []
+      responses:
+        '200':
+          description: JWKS document.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jwks'
+  /adfs/oauth2/authorize/:
+    get:
+      tags: [Authorization]
+      operationId: authorize
+      summary: OAuth 2.0 / OIDC authorization endpoint
+      description: >-
+        Begins an interactive authorization request. The user authenticates against NUS
+        credentials (and MFA where the relying party requires it) and is redirected back to
+        the client with a code, an id_token, or both, per `response_type`.
+      security: []
+      parameters:
+        - name: client_id
+          in: query
+          required: true
+          description: Identifier of the relying party registered with NUS IT.
+          schema: { type: string }
+        - name: response_type
+          in: query
+          required: true
+          description: One of the provider's advertised response types.
+          schema:
+            type: string
+            enum: [code, id_token, code id_token, id_token token, code token, code id_token token]
+        - name: redirect_uri
+          in: query
+          required: true
+          schema: { type: string, format: uri }
+        - name: scope
+          in: query
+          required: true
+          description: Space-delimited subset of the provider's advertised scopes.
+          schema: { type: string, example: 'openid profile email' }
+        - name: response_mode
+          in: query
+          required: false
+          schema: { type: string, enum: [query, fragment, form_post] }
+        - name: state
+          in: query
+          required: false
+          schema: { type: string }
+        - name: nonce
+          in: query
+          required: false
+          schema: { type: string }
+        - name: resource
+          in: query
+          required: false
+          description: ADFS relying-party resource identifier.
+          schema: { type: string }
+      responses:
+        '302':
+          description: Redirect back to `redirect_uri` carrying the authorization response.
+          headers:
+            Location:
+              schema: { type: string, format: uri }
+        '400':
+          description: Invalid or unregistered authorization request.
+  /adfs/oauth2/token/:
+    post:
+      tags: [Authorization]
+      operationId: token
+      summary: OAuth 2.0 token endpoint
+      description: >-
+        Exchanges a grant for tokens. The provider advertises the authorization_code,
+        refresh_token, client_credentials, jwt-bearer, implicit, password, device_code and
+        srv_challenge grant types.
+      security:
+        - clientSecretBasic: []
+        - clientSecretPost: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [grant_type]
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                    - authorization_code
+                    - refresh_token
+                    - client_credentials
+                    - 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+                    - implicit
+                    - password
+                    - srv_challenge
+                    - 'urn:ietf:params:oauth:grant-type:device_code'
+                    - device_code
+                code: { type: string }
+                refresh_token: { type: string }
+                redirect_uri: { type: string, format: uri }
+                client_id: { type: string }
+                client_secret: { type: string }
+                client_assertion_type: { type: string }
+                client_assertion: { type: string }
+                scope: { type: string }
+      responses:
+        '200':
+          description: Token response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: OAuth 2.0 error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+  /adfs/oauth2/devicecode:
+    post:
+      tags: [Authorization]
+      operationId: deviceAuthorization
+      summary: Device authorization endpoint
+      description: >-
+        RFC 8628 device authorization grant, for input-constrained clients on the NUS network.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [client_id]
+              properties:
+                client_id: { type: string }
+                scope: { type: string }
+      responses:
+        '200':
+          description: Device code, user code and verification URI.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceCodeResponse'
+        '400':
+          description: OAuth 2.0 error response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+  /adfs/userinfo:
+    get:
+      tags: [Session]
+      operationId: userinfo
+      summary: UserInfo endpoint
+      description: >-
+        Returns claims about the authenticated NUS end user. Requires a bearer access token
+        issued with the `openid` scope. Subject identifiers are pairwise.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Claims for the authenticated subject.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: Missing, expired or invalid access token.
+  /adfs/oauth2/logout:
+    get:
+      tags: [Session]
+      operationId: endSession
+      summary: End session / front-channel logout endpoint
+      description: >-
+        Terminates the user's session at the provider. The provider advertises
+        front-channel logout with session support.
+      security: []
+      parameters:
+        - name: post_logout_redirect_uri
+          in: query
+          required: false
+          schema: { type: string, format: uri }
+        - name: id_token_hint
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        '302':
+          description: Redirect after session termination.
+  /FederationMetadata/2007-06/FederationMetadata.xml:
+    get:
+      tags: [Discovery]
+      operationId: getFederationMetadata
+      summary: SAML 2.0 / WS-Federation metadata
+      description: >-
+        Returns the signed SAML 2.0 metadata document for entityID
+        `https://vafs.nus.edu.sg/adfs/services/trust`, carrying both an IDPSSODescriptor and
+        an SPSSODescriptor, four SingleLogoutService bindings, and 76 declared claim types.
+        Publicly readable, no authentication.
+      security: []
+      responses:
+        '200':
+          description: Signed SAML 2.0 EntityDescriptor.
+          content:
+            application/samlmetadata+xml:
+              schema: { type: string, format: xml }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    clientSecretBasic:
+      type: http
+      scheme: basic
+      description: client_secret_basic client authentication.
+    clientSecretPost:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Placeholder for client_secret_post; the provider also advertises private_key_jwt and
+        windows_client_authentication.
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  schemas:
+    OpenIdConfiguration:
+      type: object
+      description: OpenID Provider metadata as returned by the live NUS discovery endpoint.
+      required: [issuer, authorization_endpoint, token_endpoint, jwks_uri]
+      properties:
+        issuer: { type: string, example: 'https://vafs.nus.edu.sg/adfs' }
+        authorization_endpoint: { type: string, example: 'https://vafs.nus.edu.sg/adfs/oauth2/authorize/' }
+        token_endpoint: { type: string, example: 'https://vafs.nus.edu.sg/adfs/oauth2/token/' }
+        jwks_uri: { type: string, example: 'https://vafs.nus.edu.sg/adfs/discovery/keys' }
+        userinfo_endpoint: { type: string, example: 'https://vafs.nus.edu.sg/adfs/userinfo' }
+        end_session_endpoint: { type: string, example: 'https://vafs.nus.edu.sg/adfs/oauth2/logout' }
+        device_authorization_endpoint: { type: string, example: 'https://vafs.nus.edu.sg/adfs/oauth2/devicecode' }
+        access_token_issuer: { type: string, example: 'https://vafs.nus.edu.sg/adfs/services/trust' }
+        scopes_supported:
+          type: array
+          items: { type: string }
+        response_types_supported:
+          type: array
+          items: { type: string }
+        grant_types_supported:
+          type: array
+          items: { type: string }
+        subject_types_supported:
+          type: array
+          items: { type: string, enum: [pairwise] }
+        id_token_signing_alg_values_supported:
+          type: array
+          items: { type: string }
+        token_endpoint_auth_methods_supported:
+          type: array
+          items: { type: string }
+        claims_supported:
+          type: array
+          items: { type: string }
+        frontchannel_logout_supported: { type: boolean }
+        frontchannel_logout_session_supported: { type: boolean }
+    Jwks:
+      type: object
+      required: [keys]
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            required: [kty, use, alg, kid, n, e]
+            properties:
+              kty: { type: string, example: RSA }
+              use: { type: string, example: sig }
+              alg: { type: string, example: RS256 }
+              kid: { type: string }
+              x5t: { type: string }
+              n: { type: string, description: RSA modulus, base64url. }
+              e: { type: string, example: AQAB }
+              x5c:
+                type: array
+                items: { type: string }
+    TokenResponse:
+      type: object
+      required: [access_token, token_type]
+      properties:
+        access_token: { type: string }
+        token_type: { type: string, example: bearer }
+        expires_in: { type: integer, example: 3600 }
+        refresh_token: { type: string }
+        refresh_token_expires_in: { type: integer }
+        id_token: { type: string, description: 'JWT signed with RS256.' }
+        scope: { type: string }
+    DeviceCodeResponse:
+      type: object
+      required: [device_code, user_code, verification_uri]
+      properties:
+        device_code: { type: string }
+        user_code: { type: string }
+        verification_uri: { type: string, format: uri }
+        expires_in: { type: integer }
+        interval: { type: integer }
+    UserInfo:
+      type: object
+      description: >-
+        Claims the provider advertises in `claims_supported`. NUS issues pairwise subject
+        identifiers, so `sub` is per-client and not a stable cross-client campus identifier.
+      properties:
+        sub: { type: string }
+        upn: { type: string, description: 'User principal name, e.g. e0123456@u.nus.edu' }
+        unique_name: { type: string }
+        aud: { type: string }
+        iss: { type: string }
+        iat: { type: integer }
+        exp: { type: integer }
+        nbf: { type: integer }
+        auth_time: { type: integer }
+        mfa_auth_time: { type: integer }
+        nonce: { type: string }
+        at_hash: { type: string }
+        c_hash: { type: string }
+        sid: { type: string }
+        pwd_url: { type: string, format: uri }
+        pwd_exp: { type: integer }
+    OAuthError:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string, example: invalid_grant }
+        error_description: { type: string }

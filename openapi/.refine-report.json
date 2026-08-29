@@ -1,19 +1,21 @@
 {
   "provider": "nus",
   "sources": [
-    "nus-modules-api-openapi.yml",
-    "nus-venues-api-openapi.yml"
+    "nus-identity-openapi.yml"
   ],
   "outputs": [
-    "nus-modules-api-openapi.yml",
-    "nus-venues-api-openapi.yml"
+    "nus-authorization-api-openapi.yml",
+    "nus-discovery-api-openapi.yml",
+    "nus-session-api-openapi.yml"
   ],
-  "archived": [],
-  "errors": [
-    "nus-modules-api-openapi.yml: dangling $ref: #/components/responses/404",
-    "nus-venues-api-openapi.yml: dangling $ref: #/components/responses/404"
+  "archived": [
+    "archived openapi/nus-identity-openapi.yml"
   ],
+  "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "nus-identity-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+3 apis, 10 total)"
+  ],
   "skipped": []
 }
