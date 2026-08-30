@@ -1,0 +1,296 @@
+{
+  "dspaceUI" : "https://scholarbank.nus.edu.sg",
+  "dspaceName" : "ScholarBank@NUS",
+  "dspaceServer" : "https://scholarbank.nus.edu.sg/server",
+  "dspaceVersion" : "DSpace 7.6",
+  "type" : "root",
+  "_links" : {
+    "actuator" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/actuator"
+    },
+    "atmire-versions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/atmire-versions"
+    },
+    "atmireDsoConfigLots" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmireDsoConfigLots"
+    },
+    "atmireDsoConfigOptions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmireDsoConfigOptions"
+    },
+    "atmireDsoConfigs" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmireDsoConfigs"
+    },
+    "atmirefeaturebundles" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmirefeaturebundles"
+    },
+    "atmirefeatures" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmirefeatures"
+    },
+    "atmirevaluepair-byCountry" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmirevaluepair/search/byCountry"
+    },
+    "atmirevaluepairs" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/atmirevaluepairs"
+    },
+    "authn" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/authn"
+    },
+    "authorityvalues" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/authorityvalues"
+    },
+    "authorizations" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/authz/authorizations"
+    },
+    "batcheditconfigs" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/batchedit/batcheditconfigs"
+    },
+    "bitstreamformats" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/bitstreamformats"
+    },
+    "bitstreammetadataextractions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/integration/bitstreammetadataextractions"
+    },
+    "bitstreams" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/bitstreams"
+    },
+    "browses" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/discover/browses"
+    },
+    "bulkaccessconditionoptions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/bulkaccessconditionoptions"
+    },
+    "bundles" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/bundles"
+    },
+    "citationsources" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/integration/citationsources"
+    },
+    "citationvalues" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/integration/citationvalues"
+    },
+    "claimedtasks" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/workflow/claimedtasks"
+    },
+    "claimedtasks-search" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/workflow/claimedtasks/search"
+    },
+    "cmsmenus" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/cmsmenus"
+    },
+    "collections" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/collections"
+    },
+    "communities" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/communities"
+    },
+    "discover" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/discover"
+    },
+    "dso" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/dso/find{?uuid}",
+      "templated" : true
+    },
+    "entitytypes" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/entitytypes"
+    },
+    "eperson-registration" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/eperson/registrations"
+    },
+    "epersons" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/eperson/epersons"
+    },
+    "externalsources" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/integration/externalsources"
+    },
+    "features" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/authz/features"
+    },
+    "feedbacks" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/tools/feedbacks"
+    },
+    "groups" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/eperson/groups"
+    },
+    "identifiers" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/pid/identifiers"
+    },
+    "itemrequests" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/tools/itemrequests"
+    },
+    "items" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/items"
+    },
+    "itemtemplates" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/itemtemplates"
+    },
+    "metadatafields" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/metadatafields"
+    },
+    "metadataschemas" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/metadataschemas"
+    },
+    "metadatasuggestions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/integration/metadatasuggestions"
+    },
+    "oidc" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/authn"
+    },
+    "pages" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/pages"
+    },
+    "pid" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/pid/find{?id}",
+      "templated" : true
+    },
+    "pooltasks" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/workflow/pooltasks"
+    },
+    "pooltasks-search" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/workflow/pooltasks/search"
+    },
+    "potential-duplicate-records" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/duplicatecheck/potential-duplicate-records"
+    },
+    "predefinedreports" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/predefinedreports"
+    },
+    "processes" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/system/processes"
+    },
+    "profiles" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/eperson/profiles"
+    },
+    "properties" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/properties"
+    },
+    "queryCategories" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/suggestion/queryCategories"
+    },
+    "querySuggestions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/suggestion/querySuggestions"
+    },
+    "registrations" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/eperson/registrations"
+    },
+    "relationships" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/relationships"
+    },
+    "relationshiptypes" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/relationshiptypes"
+    },
+    "resourcepolicies" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/authz/resourcepolicies"
+    },
+    "resourcepolicies-search" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/authz/resourcepolicies/search"
+    },
+    "saveditemlists" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/tools/saveditemlists"
+    },
+    "scripts" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/system/scripts"
+    },
+    "searchreports" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/searchreports"
+    },
+    "searchterms" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/searchterms"
+    },
+    "self" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api"
+    },
+    "sites" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/sites"
+    },
+    "statistics" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics"
+    },
+    "statlets" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/statlets"
+    },
+    "storagereports" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/storagereports"
+    },
+    "submissionaccessoptions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissionaccessoptions"
+    },
+    "submissioncclicenseUrls" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissioncclicenseUrls"
+    },
+    "submissioncclicenseUrls-search" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissioncclicenseUrls/search"
+    },
+    "submissioncclicenses" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissioncclicenses"
+    },
+    "submissiondefinitions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissiondefinitions"
+    },
+    "submissionforms" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissionforms"
+    },
+    "submissionsections" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissionsections"
+    },
+    "submissionuploads" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/submissionuploads"
+    },
+    "subscriptions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/subscriptions"
+    },
+    "subscriptions-search" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/subscriptions/search"
+    },
+    "supervisionorders" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/core/supervisionorders"
+    },
+    "systemwidealerts" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/system/systemwidealerts"
+    },
+    "usagereports" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/usagereports"
+    },
+    "usagestatisticstables" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/usagestatisticstables"
+    },
+    "usagestatisticstablesearchlist-config" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/usagestatisticstablesearchlist/config"
+    },
+    "usagestatisticstablesearchlists" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/statistics/usagestatisticstablesearchlists"
+    },
+    "versionhistories" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/versioning/versionhistories"
+    },
+    "versions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/versioning/versions"
+    },
+    "video-streaming" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/atmire-avs"
+    },
+    "vocabularies" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/submission/vocabularies"
+    },
+    "vocabularyEntryDetails" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/submission/vocabularyEntryDetails"
+    },
+    "vocabularyEntryDetails-search" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/submission/vocabularyEntryDetails/search"
+    },
+    "workflowactions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/workflowactions"
+    },
+    "workflowdefinitions" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/workflowdefinitions"
+    },
+    "workflowitems" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/workflow/workflowitems"
+    },
+    "workflowsteps" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/config/workflowsteps"
+    },
+    "workspaceitems" : {
+      "href" : "https://scholarbank.nus.edu.sg/server/api/submission/workspaceitems"
+    }
+  }
+}

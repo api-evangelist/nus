@@ -1,0 +1,96 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration (200),
+  https://vafs.nus.edu.sg/adfs/discovery/keys (200),
+  https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml (200),
+  https://nnextbus.nus.edu.sg/BusStops (401, WWW-Authenticate: Basic),
+  https://scholarbank.nus.edu.sg/server/api (200, anonymous read) — all fetched 2026-08-19
+provider: National University of Singapore
+providerId: nus
+description: >-
+  Authentication posture across every National University of Singapore surface that could be
+  reached from the open internet. NUS runs one institution-operated authorization server and
+  fronts essentially everything gated with it; the small number of publicly readable surfaces
+  are open metadata endpoints on rented platforms.
+schemes:
+- name: NUS federated identity (OpenID Connect / OAuth 2.0)
+  type: openIdConnect
+  x-operator: institution
+  issuer: https://vafs.nus.edu.sg/adfs
+  discovery: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  jwks_uri: https://vafs.nus.edu.sg/adfs/discovery/keys
+  authorization_endpoint: https://vafs.nus.edu.sg/adfs/oauth2/authorize/
+  token_endpoint: https://vafs.nus.edu.sg/adfs/oauth2/token/
+  userinfo_endpoint: https://vafs.nus.edu.sg/adfs/userinfo
+  end_session_endpoint: https://vafs.nus.edu.sg/adfs/oauth2/logout
+  device_authorization_endpoint: https://vafs.nus.edu.sg/adfs/oauth2/devicecode
+  grant_types:
+  - authorization_code
+  - refresh_token
+  - client_credentials
+  - 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+  - implicit
+  - password
+  - srv_challenge
+  - 'urn:ietf:params:oauth:grant-type:device_code'
+  client_auth_methods:
+  - client_secret_post
+  - client_secret_basic
+  - private_key_jwt
+  - windows_client_authentication
+  token_signing_algorithms:
+  - RS256
+  subject_type: pairwise
+  pkce_advertised: false
+  registration_endpoint_advertised: false
+  self_service: false
+  onboarding: >-
+    Relying parties are registered by NUS Information Technology. There is no public dynamic
+    client registration endpoint and no self-service developer signup; a client_id exists only
+    once NUS IT creates one, which in practice requires institutional affiliation.
+- name: NUS federated identity (SAML 2.0 / WS-Federation / WS-Trust)
+  type: saml2
+  x-operator: institution
+  entityID: https://vafs.nus.edu.sg/adfs/services/trust
+  metadata: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  sso_endpoint: https://vafs.nus.edu.sg/adfs/ls/
+  federation: Singapore Access Federation (SGAF), interfederating with eduGAIN
+  detail: See identity-federation/nus-identity-federation.yml
+- name: HTTP Basic authentication
+  type: http
+  scheme: basic
+  x-operator: institution
+  applies_to: https://nnextbus.nus.edu.sg/
+  evidence: 'HTTP/1.1 401 UNAUTHORIZED, WWW-Authenticate: Basic realm="Authentication Required"'
+  detail: >-
+    The NUS internal shuttle bus (NextBus) API is live and institution-operated but sits behind
+    HTTP Basic credentials that NUS does not issue publicly. Credentials are not obtainable
+    without affiliation; no probe here attempted to guess or defeat them.
+- name: Anonymous read
+  type: none
+  x-operator: tenant
+  applies_to:
+  - https://scholarbank.nus.edu.sg/server/api
+  - https://scholarbank.nus.edu.sg/oai/request
+  - https://blog.nus.edu.sg/wp-json/
+  detail: >-
+    Open scholarly and publishing metadata is readable without credentials. All three run on
+    rented platforms (Atmire Open Repository for ScholarBank, CampusPress for Blog.nus), so the
+    absence of authentication is the platform's design decision, not NUS's engineering.
+
+observations:
+- >-
+  NUS advertises the `password` and `implicit` grant types, both of which OAuth 2.1 and the
+  IETF security BCP deprecate. This is an ADFS default rather than a deliberate NUS choice, but
+  it is what the institution's live discovery document currently tells clients is available.
+- >-
+  PKCE is not advertised in the discovery document. ADFS supports it; the metadata does not
+  declare `code_challenge_methods_supported`, so a conformant client cannot discover it.
+- >-
+  Subject identifiers are pairwise, which means `sub` is per-relying-party. Any agent or
+  integrator expecting a stable cross-application NUS campus identifier will not get one from
+  this provider.
+- >-
+  There is no public developer registration path anywhere in the NUS estate. Every gated NUS
+  API — including the shuttle bus API — is reachable only through an internal request to NUS IT.

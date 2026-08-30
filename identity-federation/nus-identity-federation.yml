@@ -1,0 +1,106 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml (HTTP 200,
+  77,023 bytes, application/samlmetadata+xml, fetched 2026-08-19); cross-checked against the
+  Singapore Access Federation entity listing at
+  https://met.refeds.org/met/federation/singapore-access-federation-sgaf/
+provider: National University of Singapore
+providerId: nus
+description: >-
+  Identity federation is the surface class universities operate by definition and almost never
+  get catalogued for, and it is the strongest institution-owned machine-readable artifact NUS
+  publishes. NUS runs its own SAML 2.0 / WS-Federation identity provider at vafs.nus.edu.sg
+  ("NUS VAFS"), publishes signed metadata for it at the standard ADFS well-known path, and is a
+  registered identity provider in the Singapore Access Federation (SGAF), which SingAREN
+  operates and which interfederates with eduGAIN.
+
+entities:
+- name: NUS VAFS — institutional identity provider
+  entityID: https://vafs.nus.edu.sg/adfs/services/trust
+  metadata_url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  metadata_status: 200
+  x-operator: institution
+  operator_evidence:
+    tls_subject_organization: National University of Singapore
+    tls_issuer: DigiCert EV RSA CA G2
+    tls_validation: Extended Validation (businessCategory=Private Organization, serialNumber=200604346E, jurisdictionC=SG)
+    a_record: 137.132.21.18
+  software: Microsoft Active Directory Federation Services (ADFS)
+  signed: true
+  roles:
+  - IDPSSODescriptor
+  - SPSSODescriptor
+  protocols:
+  - urn:oasis:names:tc:SAML:2.0:protocol
+  - http://docs.oasis-open.org/ws-sx/ws-trust/200512
+  - http://schemas.xmlsoap.org/ws/2005/02/trust
+  - http://docs.oasis-open.org/wsfed/federation/200706
+  endpoints:
+  - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+    location: https://vafs.nus.edu.sg/adfs/ls/
+  - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+    location: https://vafs.nus.edu.sg/adfs/ls/
+  - binding: urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+    location: https://vafs.nus.edu.sg/adfs/services/trust/artifactresolution
+  - binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact
+    location: https://vafs.nus.edu.sg/adfs/services/trust/artifactresolution
+  nameid_formats:
+  - urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+  - urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+  - urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+  declared_claim_types: 76
+  oidc_layer:
+    issuer: https://vafs.nus.edu.sg/adfs
+    discovery_url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+    discovery_status: 200
+    jwks_uri: https://vafs.nus.edu.sg/adfs/discovery/keys
+    jwks_status: 200
+
+- name: NUS entry in the Singapore Access Federation (SGAF)
+  entityID: https://nusaz.singaren.net.sg/simplesaml/saml2/idp/metadata.php
+  metadata_url: https://nusaz.singaren.net.sg/simplesaml/saml2/idp/metadata.php
+  metadata_status: 200
+  x-operator: tenant
+  operator_note: >-
+    The entityID NUS is registered under inside SGAF sits on singaren.net.sg, not nus.edu.sg.
+    This is a SimpleSAMLphp proxy identity provider that SingAREN operates on NUS's behalf so
+    the university can reach federated services. The affiliation is NUS's; the host, the
+    software and the operational responsibility are SingAREN's. Recorded as a relationship,
+    not credited to NUS as engineering.
+  federation: Singapore Access Federation (SGAF)
+  federation_operator: SingAREN — Singapore Advanced Research and Education Network
+  federation_url: https://www.singaren.net.sg/network-services/singapore-access-federation-sgaf/
+  interfederates_with: eduGAIN
+
+federation_membership:
+- federation: Singapore Access Federation (SGAF)
+  role: Identity Provider
+  confirmed: true
+  evidence: >-
+    NUS is listed as an identity provider among the 14 IdPs in SGAF in the REFEDS Metadata
+    Explorer Tool listing for the federation.
+  source: https://met.refeds.org/met/federation/singapore-access-federation-sgaf/
+
+standards:
+- id: saml
+  version: '2.0'
+  conformance: confirmed
+  evidence: >-
+    Signed EntityDescriptor with protocolSupportEnumeration
+    "urn:oasis:names:tc:SAML:2.0:protocol" and both IDPSSODescriptor and SPSSODescriptor roles.
+  location: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  x-operator: institution
+- id: shibboleth
+  conformance: partial
+  evidence: >-
+    NUS participates in SGAF, a Shibboleth-model SAML 2.0 research-and-education federation
+    that interfederates with eduGAIN. NUS's own IdP is ADFS rather than Shibboleth software;
+    the federation trust model and metadata profile are the Shibboleth/REFEDS one.
+  location: https://met.refeds.org/met/federation/singapore-access-federation-sgaf/
+  x-operator: institution
+
+notes: >-
+  The federation metadata is unauthenticated, cache-friendly and refreshed by ADFS on its own
+  schedule. Nothing in this file required credentials to obtain; the document is published at
+  the standard path precisely so relying parties can consume it.

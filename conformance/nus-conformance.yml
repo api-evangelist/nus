@@ -1,0 +1,134 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of National University of Singapore surfaces on 2026-08-19, evaluated against the
+  Kin Score `education` regulatory regime standards list (scim, lti, oneroster, ed-fi, caliper,
+  qti, oai-pmh, shibboleth, saml, orcid, datacite, crossref).
+provider: National University of Singapore
+providerId: nus
+regime: education
+description: >-
+  Domain-standard conformance for NUS, scored from the contracts themselves rather than from any
+  prose claim — NUS makes no conformance claims anywhere public. Every hit carries the operator
+  of the surface it was found on, because a standard implemented by a platform NUS rents is a
+  fact about the platform first and about NUS second. Reward-only: nothing is asserted that was
+  not observed in a live response.
+standards:
+- id: saml
+  version: '2.0'
+  status: confirmed
+  x-operator: institution
+  evidence: >-
+    Signed SAML 2.0 EntityDescriptor served at the ADFS well-known metadata path, entityID
+    https://vafs.nus.edu.sg/adfs/services/trust, carrying IDPSSODescriptor and SPSSODescriptor
+    roles, protocolSupportEnumeration urn:oasis:names:tc:SAML:2.0:protocol, four SLO bindings
+    (HTTP-Redirect, HTTP-POST, SOAP, HTTP-Artifact) and three NameID formats.
+  location: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  status_code: 200
+  artifact: examples/nus-saml-federation-metadata-example.xml
+- id: shibboleth
+  status: partial
+  x-operator: institution
+  evidence: >-
+    NUS is a registered identity provider in the Singapore Access Federation (SGAF), the
+    REFEDS-model SAML federation SingAREN operates, which interfederates with eduGAIN. The
+    federation trust model and metadata profile are the Shibboleth/REFEDS ones; NUS's own IdP
+    software is Microsoft ADFS rather than Shibboleth, hence partial rather than confirmed.
+  location: https://met.refeds.org/met/federation/singapore-access-federation-sgaf/
+  status_code: 200
+  artifact: identity-federation/nus-identity-federation.yml
+- id: oai-pmh
+  version: '2.0'
+  status: confirmed
+  x-operator: tenant
+  evidence: >-
+    Live OAI-PMH interface. Identify reports repositoryName "ScholarBank@NUS", protocolVersion
+    2.0, adminEmail scholarbank@nus.edu.sg, earliestDatestamp 2006-11-09, granularity
+    YYYY-MM-DDThh:mm:ssZ, deletedRecord transient. ListMetadataFormats advertises twelve
+    formats including oai_dc, qdc, mods, mets, marc, didl, ore, rdf, dim, xoai, etdms and
+    uketd_dc. The content and the administrative contact are NUS's; the DSpace software and the
+    hosting are Atmire Open Repository's (scholarbank.nus.edu.sg CNAMEs to
+    nusor.cname.openrepository.com).
+  location: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+  status_code: 200
+  artifact: examples/nus-scholarbank-oai-identify-example.xml
+  defect: >-
+    The Identify response returns an unsubstituted configuration template as its repository
+    identifier — `<repositoryIdentifier>${oai.identifier.prefix}</repositoryIdentifier>` and
+    `<sampleIdentifier>oai:${oai.identifier.prefix}:10635/1234</sampleIdentifier>`. The
+    oai-identifier description block is therefore non-conformant: a harvester cannot derive the
+    repository's OAI identifier scheme from it. This is a live misconfiguration in the deployed
+    repository, not a transcription error here.
+- id: lti
+  version: '1.3'
+  status: confirmed
+  x-operator: tenant
+  evidence: >-
+    LTI 1.3 / LTI Advantage tool-platform security JWKS served at the Canvas LTI well-known
+    path, returning an RSA key set. NUS's learning management system is Canvas, hosted by
+    Instructure (canvas.nus.edu.sg CNAMEs to nus-vanity.instructure.com). The LTI conformance is
+    Instructure's product, running under NUS's name for NUS's courses.
+  location: https://canvas.nus.edu.sg/api/lti/security/jwks
+  status_code: 200
+- id: orcid
+  status: partial
+  x-operator: tenant
+  evidence: >-
+    The ScholarBank@NUS DSpace metadata registry declares a `dc.contributor.orcid` field among
+    its 485 registered metadata fields, so the repository is capable of carrying ORCID iDs
+    against contributors. No public evidence was found of ORCID member integration, ORCID
+    auto-update, or an ORCID authentication flow, so this is capability rather than conformance.
+  location: https://scholarbank.nus.edu.sg/server/api/core/metadatafields?size=200
+  status_code: 200
+- id: datacite
+  status: partial
+  x-operator: tenant
+  evidence: >-
+    The ScholarBank@NUS metadata registry declares DataCite-namespaced fields
+    (`datacite.geoLocation`, `datacite.subject.fos`) alongside `dc.identifier.doi`. Items are
+    identified by Handle (prefix 10635) rather than by DOI, and no DataCite repository
+    registration or DOI minting prefix was confirmed, so this is schema support rather than
+    demonstrated DataCite conformance.
+  location: https://scholarbank.nus.edu.sg/server/api/core/metadatafields?size=200
+  status_code: 200
+- id: crossref
+  status: not_found
+  evidence: >-
+    No Crossref deposit, member identifier or Crossref-namespaced metadata was observed on any
+    reachable NUS surface.
+- id: scim
+  status: not_found
+  evidence: >-
+    Probed for SCIM 2.0 service provider configuration against the institution's identity
+    service. https://vafs.nus.edu.sg/scim/v2/ServiceProviderConfig returned 404 and
+    https://vafs.nus.edu.sg/adfs/scim/v2/ServiceProviderConfig returned 503. No SCIM endpoint is
+    published.
+- id: oneroster
+  status: not_found
+  evidence: >-
+    No OneRoster endpoint or rostering interface was found. NUS's course and enrolment data is
+    reachable only through the Canvas tenant and the Registrar's Office systems, neither of
+    which publishes a OneRoster surface.
+- id: caliper
+  status: not_found
+  evidence: No Caliper Analytics event store or endpoint was found on any reachable NUS surface.
+- id: qti
+  status: not_found
+  evidence: No QTI assessment interchange surface was found.
+- id: ed-fi
+  status: not_found
+  evidence: >-
+    Ed-Fi is a US K-12 data standard with no applicability to a Singaporean research university;
+    probed for completeness against the regime list and, as expected, absent.
+summary:
+  confirmed: 3
+  partial: 3
+  not_found: 6
+  institution_operated_hits: 2
+  tenant_operated_hits: 4
+notes: >-
+  Read the operator column before reading the count. Only two of the six standards hits belong
+  to NUS's own engineering, and both are identity federation. The other four — OAI-PMH, LTI,
+  ORCID and DataCite — arrive with Atmire's DSpace and Instructure's Canvas, and would be there
+  whether NUS had an API practice or not. The single genuine institutional achievement in this
+  file is that NUS runs and publishes signed federation metadata for its own identity provider.

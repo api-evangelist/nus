@@ -1,0 +1,76 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  scopes_supported and claims_supported read verbatim from
+  https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration (HTTP 200, fetched 2026-08-19)
+provider: National University of Singapore
+providerId: nus
+x-operator: institution
+description: >-
+  The complete set of OAuth 2.0 / OpenID Connect scopes the National University of Singapore's
+  own authorization server advertises to clients, plus the claims it will assert. These were
+  read from the institution's live discovery document, not inferred. NUS publishes no prose
+  documentation of these scopes anywhere public — the discovery document is the only
+  description of them that exists on the open internet.
+authorization_server: https://vafs.nus.edu.sg/adfs
+scopes:
+- name: openid
+  standard: true
+  description: Requests an ID token; required for any OpenID Connect flow against this provider.
+- name: profile
+  standard: true
+  description: Requests the end user's basic profile claims.
+- name: email
+  standard: true
+  description: Requests the end user's email address claim.
+- name: allatclaims
+  standard: false
+  vendor: Microsoft ADFS
+  description: >-
+    ADFS-specific scope that asks the provider to place all claims from the access token into
+    the ID token as well. Broad by construction — grant it deliberately, not by default.
+- name: user_impersonation
+  standard: false
+  vendor: Microsoft ADFS
+  description: >-
+    Permits a client to act on behalf of the signed-in user against a downstream NUS resource.
+    The highest-consequence scope this provider advertises.
+- name: aza
+  standard: false
+  vendor: Microsoft ADFS
+  description: Broker/primary-refresh-token scope used by Microsoft device authentication brokers.
+- name: logon_cert
+  standard: false
+  vendor: Microsoft ADFS
+  description: Requests a logon certificate for the authenticated user.
+- name: vpn_cert
+  standard: false
+  vendor: Microsoft ADFS
+  description: Requests a VPN client certificate for the authenticated user.
+- name: winhello_cert
+  standard: false
+  vendor: Microsoft ADFS
+  description: Requests a Windows Hello for Business certificate for the authenticated user.
+claims_supported:
+- aud
+- iss
+- iat
+- exp
+- auth_time
+- nonce
+- at_hash
+- c_hash
+- sub
+- upn
+- unique_name
+- pwd_url
+- pwd_exp
+- mfa_auth_time
+- sid
+- nbf
+notes: >-
+  Three of the nine advertised scopes (logon_cert, vpn_cert, winhello_cert) mint credentials
+  rather than grant data access, and two more (allatclaims, user_impersonation) are broad by
+  design. Only three are standard OIDC scopes. An agent integrating with NUS should request
+  `openid profile email` and nothing else; the remainder exist for Microsoft device and VPN
+  enrolment flows and have no third-party use case.
