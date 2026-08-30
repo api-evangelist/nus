@@ -3,13 +3,19 @@
   "feeds": [
     {
       "source": "https://news.nus.edu.sg/nus-makes-ai-courses-compulsory-gives-free-access-to-chatgpt-edu/",
-      "error": "URLError"
+      "feed_url": "https://news.nus.edu.sg/nus-makes-ai-courses-compulsory-gives-free-access-to-chatgpt-edu/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     },
     {
       "source": "https://news.nus.edu.sg/",
-      "error": "URLError"
+      "feed_url": "https://news.nus.edu.sg/feed/",
+      "title": "",
+      "saved": 17,
+      "method": "discovered"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-08-22T20:20:02Z"
+  "post_count": 17,
+  "fetched": "2026-08-30T22:33:40Z"
 }
