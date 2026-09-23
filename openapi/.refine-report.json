@@ -1,21 +1,24 @@
 {
   "provider": "nus",
   "sources": [
-    "nus-identity-openapi.yml"
+    "_ae-authored/nus-identity-openapi.yml"
   ],
   "outputs": [
     "nus-authorization-api-openapi.yml",
     "nus-discovery-api-openapi.yml",
     "nus-session-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/nus-identity-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "nus-identity-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+3 apis, 10 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "nus-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nus-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "nus-session-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

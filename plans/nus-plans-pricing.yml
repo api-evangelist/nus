@@ -4,30 +4,30 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: National University of Singapore
 providerId: nus
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
 - Higher Education
 - University
 - Plans
-description: >-
-  National University of Singapore is a non-commercial higher-education institution; its APIs are not sold
-  as a commercial product. Public APIs (library, repository, course, and open-metadata
-  interfaces) are offered free of charge, typically for non-commercial use. Most
-  administrative and identity APIs are not openly self-service and require institutional
-  affiliation, credentials, or federation membership rather than a paid plan.
-notes: >-
-  No published per-seat or per-call commercial pricing. "Free / Open" reflects open
-  public endpoints; "Affiliation / Credentialed" reflects access gated by institutional
-  identity rather than payment.
+description: 'National University of Singapore is a non-commercial higher-education institution and sells
+  no API access. There is no pricing, no plan tier and no self-service signup anywhere in its estate.
+  Access is governed by institutional affiliation rather than payment: the identity service at vafs.nus.edu.sg
+  issues a client_id only when NUS Information Technology creates one, the campus shuttle bus API requires
+  HTTP Basic credentials NUS does not publish, and the Canvas API requires an NUS account. The publicly
+  readable surfaces - OIDC and SAML metadata, OAI-PMH, the DSpace REST API and the WordPress REST API
+  - are free and open with no registration at all.'
+notes: '"Free / Open" describes the anonymously readable metadata endpoints. Everything else is affiliation-gated,
+  not priced.'
 sources:
 - https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/apis.yml
 plans:
 - id: nus-free-open
   name: Free / Open
   type: free
-  description: Public open APIs (metadata, library, repository, course data) offered at no charge, generally for non-commercial use.
+  description: Public open APIs (metadata, library, repository, course data) offered at no charge, generally
+    for non-commercial use.
   entries:
   - label: Open API Access
     name: open_api_access
@@ -42,7 +42,8 @@ plans:
 - id: nus-affiliation
   name: Affiliation / Credentialed
   type: free
-  description: Administrative and identity APIs gated behind institutional SSO, client certificates, or federation membership rather than payment.
+  description: Administrative and identity APIs gated behind institutional SSO, client certificates, or
+    federation membership rather than payment.
   entries:
   - label: Credentialed Access
     name: credentialed_access
@@ -57,3 +58,5 @@ plans:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+generated: '2026-08-19'
+method: probed

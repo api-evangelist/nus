@@ -1,0 +1,69 @@
+generated: '2026-08-19'
+method: derived
+source: >-
+  Derived from observed surface behaviour and published metadata on 2026-08-19; NUS publishes
+  no versioning policy, no deprecation policy, no changelog and no status page for any of its
+  API surfaces.
+provider: National University of Singapore
+providerId: nus
+description: >-
+  Lifecycle posture for National University of Singapore API surfaces. There is no institutional
+  API lifecycle programme to describe — this artifact records that absence precisely, and
+  records the versioning that does exist where the platform underneath supplies it.
+versioning:
+- surface: NUS federated identity (vafs.nus.edu.sg)
+  x-operator: institution
+  scheme: none
+  detail: >-
+    No version in the path, no version header, no `/v1`. Versioning is implicit in the ADFS
+    product release and the OpenID Connect Discovery 1.0 and SAML 2.0 metadata profiles it
+    implements. A breaking change would surface only as a change in the discovery document,
+    which is the reason that document is worth polling.
+  changelog: none
+  deprecation_policy: none
+  status_page: none
+- surface: NUS shuttle bus API (nnextbus.nus.edu.sg)
+  x-operator: institution
+  scheme: none
+  detail: Unversioned paths behind HTTP Basic. No published deprecation or change communication.
+  changelog: none
+  deprecation_policy: none
+  status_page: none
+- surface: api.nus.edu.sg
+  x-operator: institution
+  scheme: unknown
+  detail: >-
+    Gateway hostname is live on an NUS-issued certificate but returns HTTP 500 on every probed
+    path, so no versioning scheme can be observed. Treated as not-in-service rather than as a
+    surface.
+- surface: ScholarBank@NUS (scholarbank.nus.edu.sg)
+  x-operator: tenant
+  scheme: platform
+  detail: >-
+    Versioned by the DSpace release the platform runs — currently DSpace 7.6, self-reported at
+    the REST root. NUS does not control this cadence; Atmire Open Repository does. OAI-PMH is
+    pinned to protocol version 2.0.
+  changelog: none
+  deprecation_policy: none
+  status_page: none
+- surface: NUSMods API (api.nusmods.com)
+  x-operator: tenant
+  scheme: path
+  detail: >-
+    Explicit `/v2` path versioning and a `2.0.0` info.version, plus academic-year path
+    segments that let consumers pin a year. The most disciplined versioning associated with
+    NUS data anywhere — and it is a student organisation's work, not the university's.
+  changelog: https://github.com/nusmodifications/nusmods/releases
+  deprecation_policy: none
+observations:
+- >-
+  NUS operates no status page for any API surface. Nothing in the estate publishes uptime,
+  incidents or planned maintenance to a machine-readable endpoint.
+- >-
+  The single highest-value lifecycle signal in the estate is the OIDC discovery document,
+  because it is the only institution-operated artifact that would visibly change if NUS changed
+  the contract. There is no notification channel attached to it.
+- >-
+  The OAI-PMH Identify response reports `deletedRecord: transient`, which tells harvesters that
+  ScholarBank does not guarantee persistent deletion tombstones — a real, if narrow, lifecycle
+  fact, and one supplied by DSpace rather than by NUS.

@@ -1,0 +1,43 @@
+generated: '2026-08-19'
+method: probed
+source: live HTTP fetches of the listed URLs on 2026-08-19
+description: >-
+  Verbatim responses captured from live National University of Singapore surfaces. Nothing in
+  this directory is synthesized; each file is the unmodified body returned by the URL recorded
+  against it. Operator is recorded per example because NUS runs some of these surfaces and
+  rents others.
+examples:
+- file: nus-openid-configuration-example.json
+  url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+  status: 200
+  content_type: application/json
+  x-operator: institution
+  describes: NUS federated identity service OpenID Connect discovery document.
+- file: nus-jwks-example.json
+  url: https://vafs.nus.edu.sg/adfs/discovery/keys
+  status: 200
+  content_type: application/json
+  x-operator: institution
+  describes: RSA signing keys (JWKS) for tokens issued by the NUS identity provider.
+- file: nus-saml-federation-metadata-example.xml
+  url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+  status: 200
+  content_type: application/samlmetadata+xml
+  x-operator: institution
+  describes: >-
+    Signed SAML 2.0 / WS-Federation metadata for entityID
+    https://vafs.nus.edu.sg/adfs/services/trust.
+- file: nus-scholarbank-oai-identify-example.xml
+  url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+  status: 200
+  content_type: text/xml
+  x-operator: tenant
+  describes: >-
+    OAI-PMH Identify response for ScholarBank@NUS. NUS owns the content and the adminEmail
+    (scholarbank@nus.edu.sg); the software and hosting are Atmire Open Repository's.
+- file: nus-scholarbank-dspace-root-example.json
+  url: https://scholarbank.nus.edu.sg/server/api
+  status: 200
+  content_type: application/hal+json
+  x-operator: tenant
+  describes: DSpace 7.6 HAL REST API root document for ScholarBank@NUS.

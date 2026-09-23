@@ -1,57 +1,89 @@
-vocabulary:
-  name: NUS NUSMods API Vocabulary
-  description: >-
-    Controlled vocabulary for the terms used across the NUSMods API (the
-    community-maintained interface to National University of Singapore module,
-    timetable, and venue data). Terms are drawn directly from the NUSMods
-    OpenAPI 3.0.1 specification served at https://api.nusmods.com/v2/swagger.yaml.
-  version: "2.0.0"
-  terms:
-    - term: acadYear
-      definition: The academic year a module record belongs to, formatted as a slash-separated year span such as 2024/2025.
-      tags: [time, identifier]
-    - term: moduleCode
-      definition: The official NUS code identifying a module, such as CS2100 or EL1101E.
-      tags: [identifier, module]
-    - term: moduleCredit
-      definition: The number of modular credits (MCs) a module is worth, represented as a string.
-      tags: [module, credit]
-    - term: semester
-      definition: A numeric semester within an academic year (1 or 2 for regular semesters, 3 and 4 for special terms).
-      tags: [time, enum]
-    - term: semesterData
-      definition: Per-semester offering details for a module, including exam date, exam duration, and timetable.
-      tags: [module, schedule]
-    - term: timetable
-      definition: The list of scheduled lessons offered for a module in a given semester.
-      tags: [schedule, lesson]
-    - term: lessonType
-      definition: The category of a lesson, such as Lecture, Tutorial, or Laboratory; students attend one class number per lesson type.
-      tags: [lesson, classification]
-    - term: classNo
-      definition: The class number distinguishing parallel groups of the same lesson type within a module.
-      tags: [lesson, identifier]
-    - term: weeks
-      definition: The teaching weeks a lesson occurs, expressed either as an array of week numbers or as a WeekRange with start, end, and interval.
-      tags: [schedule, lesson]
-    - term: venue
-      definition: The physical location code where a lesson is held, such as COM1-0208.
-      tags: [location, lesson]
-    - term: workload
-      definition: The expected weekly hours per workload component (lecture, tutorial, lab, project, preparation) as a numeric array, or a free-text description.
-      tags: [module, effort]
-    - term: prerequisite
-      definition: Modules or conditions that must be completed before enrolling in a module.
-      tags: [module, requirement]
-    - term: preclusion
-      definition: Modules whose content overlaps such that a student may not take both for credit.
-      tags: [module, requirement]
-    - term: faculty
-      definition: The NUS faculty or college that offers a module, such as Computing.
-      tags: [organization]
-    - term: department
-      definition: The academic department within a faculty that owns a module, such as Computer Science.
-      tags: [organization]
-    - term: availability
-      definition: A map of half-hourly time slots to occupancy status for a venue on a given day.
-      tags: [location, schedule]
+generated: '2026-08-19'
+method: derived
+source: >-
+  Terms extracted from artifacts NUS actually publishes — the live OIDC discovery document and
+  JWKS at vafs.nus.edu.sg, the signed SAML federation metadata, and the OAI-PMH Identify
+  response for ScholarBank@NUS — all fetched 2026-08-19.
+provider: National University of Singapore
+providerId: nus
+description: >-
+  The working vocabulary of the National University of Singapore's programmable surface. It is a
+  small vocabulary because the surface is small, and it is dominated by identity terms because
+  identity is what NUS actually operates. Each term records the operator of the surface it was
+  drawn from.
+terms:
+- term: VAFS
+  x-operator: institution
+  definition: >-
+    NUS's own federated identity service, hosted at vafs.nus.edu.sg. The authorization server
+    and SAML identity provider in front of essentially every gated NUS system.
+  source: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+- term: entityID
+  x-operator: institution
+  definition: >-
+    The globally unique SAML identifier for NUS as a federation participant —
+    https://vafs.nus.edu.sg/adfs/services/trust. The name other institutions and services know
+    NUS by inside SGAF and eduGAIN.
+  source: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+- term: UPN
+  x-operator: institution
+  definition: >-
+    User principal name, the claim NUS asserts to identify a person (e.g. a staff or student
+    NUSNET account). Asserted in tokens; distinct from `sub`, which is pairwise.
+  source: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+- term: pairwise subject
+  x-operator: institution
+  definition: >-
+    NUS issues a different `sub` value to each relying party for the same person, so no stable
+    cross-application campus identifier is exposed through OIDC.
+  source: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+- term: SGAF
+  x-operator: tenant
+  definition: >-
+    Singapore Access Federation, the national research-and-education identity federation
+    SingAREN operates. NUS is one of its fourteen identity providers; the proxy entity NUS is
+    registered under lives on SingAREN's domain.
+  source: https://met.refeds.org/met/federation/singapore-access-federation-sgaf/
+- term: NUSNET
+  x-operator: institution
+  definition: >-
+    The NUS campus account namespace. Surfaces in the ScholarBank metadata registry as
+    `atmire.identifier.nusnet` and underlies the UPN claim.
+  source: https://scholarbank.nus.edu.sg/server/api/core/metadatafields
+- term: ScholarBank@NUS
+  x-operator: tenant
+  definition: >-
+    The NUS institutional research repository. NUS's content, DOIs and administrative contact;
+    Atmire Open Repository's DSpace 7.6 software and hosting.
+  source: https://scholarbank.nus.edu.sg/server/api
+- term: Handle (prefix 10635)
+  x-operator: tenant
+  definition: >-
+    The persistent identifier prefix under which ScholarBank@NUS items are addressed, e.g.
+    10635/137004. NUS's assigned prefix; the Handle resolution is the repository platform's.
+  source: https://scholarbank.nus.edu.sg/server/api/core/communities
+- term: module
+  x-operator: tenant
+  definition: >-
+    NUS's term for a course unit, carrying a module code (e.g. CS2103), modular credits, a
+    workload 5-tuple and a prerequisite tree. The vocabulary is NUS's; the only public
+    machine-readable expression of it is NUSMods', a student organisation's API.
+  source: https://api.nusmods.com/v2/swagger.yaml
+- term: modular credit (MC)
+  x-operator: tenant
+  definition: >-
+    NUS's credit unit. One MC represents roughly 2.5 hours of weekly work, so a standard 4 MC
+    module implies about 10 hours per week.
+  source: https://api.nusmods.com/v2/swagger.yaml
+- term: acadYear
+  x-operator: tenant
+  definition: >-
+    NUS academic year, expressed in course data with the slash replaced by a dash (2025-2026).
+    The primary partition key for all NUS module and timetable data.
+  source: https://api.nusmods.com/v2/swagger.yaml
+notes: >-
+  Eleven terms, and only five of them come off a surface NUS operates. The course vocabulary —
+  module, MC, acadYear, prerequisite tree — is unambiguously NUS's intellectual property and
+  NUS's registry, but the only place it is written down in machine-readable form on the public
+  internet is a student organisation's OpenAPI. That gap is the most interesting single fact
+  about NUS's programmable footprint.

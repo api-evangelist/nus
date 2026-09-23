@@ -1,0 +1,77 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Verbatim error bodies observed while probing NUS hosts on 2026-08-19. Every entry below is a
+  response actually returned to an unauthenticated public request; none is synthesized.
+provider: National University of Singapore
+providerId: nus
+description: >-
+  National University of Singapore publishes no error reference for any of its surfaces. This
+  catalogue is assembled from what the hosts actually returned, and it is deliberately blunt
+  about which envelopes belong to NUS and which belong to a platform NUS rents.
+errors:
+- status: 401
+  host: nnextbus.nus.edu.sg
+  x-operator: institution
+  content_type: text/html; charset=utf-8
+  body: 'Unauthorized Access'
+  headers:
+    WWW-Authenticate: 'Basic realm="Authentication Required"'
+    Access-Control-Allow-Origin: '*'
+  assessment: >-
+    Correct status code and a correct challenge header, but a 19-byte plain-text body with no
+    error code, no machine-readable structure and no pointer to how a caller would obtain
+    credentials. An agent can tell it is unauthorized and nothing else.
+- status: 500
+  host: api.nus.edu.sg
+  x-operator: institution
+  content_type: application/json
+  body: '{ "statusCode": 500, "message": "Internal server error", "activityId": "<uuid>" }'
+  assessment: >-
+    Every path probed on api.nus.edu.sg returns this identical envelope, including `/`,
+    `/docs`, `/api-docs` and `/swagger.json`. The shape (statusCode / message / activityId) is
+    the Azure API Management error contract, so NUS has an API gateway hostname stood up on a
+    certificate issued to O=National University of Singapore — but it serves no public route
+    and reports server error rather than 404 for paths that do not exist. A 500 on an unknown
+    path is itself a defect: it tells a caller the service is broken when the real answer is
+    that nothing is published there.
+- status: 404
+  host: nnextbus.nus.edu.sg
+  x-operator: institution
+  content_type: text/html
+  body: '<!DOCTYPE HTML ...><title>404 Not Found</title>...'
+  assessment: >-
+    Werkzeug/Flask default 404 page at the service root, which also reveals that the shuttle
+    bus API is a Python service behind nginx. Correct code, no machine-readable body.
+- status: 405
+  host: scholarbank.nus.edu.sg
+  x-operator: tenant
+  content_type: application/json
+  body: '{"timestamp":"...","status":405,"error":"Method Not Allowed","message":"An exception has occurred","path":"/server/api/config/properties"}'
+  assessment: >-
+    DSpace 7 / Spring Boot default error envelope. Structured and timestamped, which is more
+    than any institution-operated NUS surface manages — but it is DSpace's contract, not NUS's.
+- status: 404
+  host: scholarbank.nus.edu.sg
+  x-operator: tenant
+  content_type: application/json
+  body: '{"timestamp":"...","status":404,"error":"Not Found","message":"No message available","path":"/server/signposting/describedby"}'
+  assessment: Same Spring Boot envelope; "No message available" carries no diagnostic value.
+soft_404s:
+- url: https://nus.edu.sg/llms.txt
+  status: 200
+  content_type: text/html
+  finding: >-
+    Returns HTTP 200 with an HTML page, not a text/plain llms.txt. This is a soft-404 and must
+    not be credited as an agent-facing artifact. NUS publishes no llms.txt.
+- url: https://www.nus.edu.sg/robots.txt
+  status: 200
+  content_type: text/html
+  finding: >-
+    Returns HTTP 200 with an HTML body rather than a robots.txt. Another soft-404; the main
+    NUS web estate sits behind Imperva/Incapsula, which answers unknown paths with a page
+    rather than a status.
+notes: >-
+  No NUS surface returns RFC 9457 problem+json. No surface returns a stable machine-readable
+  error code. The only structured error envelopes in the entire estate belong to DSpace and to
+  Azure API Management, and NUS authored neither.

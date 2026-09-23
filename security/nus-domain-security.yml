@@ -1,34 +1,131 @@
-generated: '2026-07-11'
+generated: '2026-08-19'
 method: probed
-source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+source: live DNS/TLS/HTTP probes of every host in apis.yml, 2026-08-19
+description: >-
+  Transport and domain security posture per host, with the operator recorded alongside. The
+  organization field in each TLS certificate is the load-bearing column here: it is the hardest
+  public evidence available of who actually runs a host, and it is what separates NUS's own
+  engineering from the platforms NUS rents.
 hosts:
+- host: vafs.nus.edu.sg
+  x-operator: institution
+  https: true
+  tls_version: TLSv1.2
+  cert_subject_organization: National University of Singapore
+  cert_validation: Extended Validation
+  cert_issuer: DigiCert EV RSA CA G2
+  cert_expires: Sep 25 23:59:59 2026 GMT
+  a_record: 137.132.21.18
+  hsts: false
+  note: >-
+    NUS's identity provider. EV certificate naming NUS as the validated organization
+    (jurisdictionC=SG, businessCategory=Private Organization, serialNumber=200604346E).
+    Negotiates TLS 1.2, not 1.3, and sends no HSTS header — weak for the host that fronts every
+    credential in the university.
+- host: nnextbus.nus.edu.sg
+  x-operator: institution
+  https: true
+  tls_version: TLSv1.2
+  cert_subject_organization: National University of Singapore
+  cert_validation: Organization Validation
+  cert_issuer: Sectigo Public Server Authentication CA OV R36
+  cert_expires: Oct 23 23:59:59 2026 GMT
+  a_record: 137.132.173.15
+  hsts: true
+  hsts_max_age: 31536000
+  hsts_include_subdomains: true
+  note: NUS internal shuttle bus API. Live, HTTP Basic gated, CORS wide open (`*`).
+- host: api.nus.edu.sg
+  x-operator: institution
+  https: true
+  cert_subject_organization: National University of Singapore
+  cert_validation: Organization Validation
+  cert_issuer: Sectigo Public Server Authentication CA OV R36
+  cert_expires: Dec 19 23:59:59 2026 GMT
+  a_record: 137.132.48.6
+  hsts: false
+  note: >-
+    API gateway hostname on an NUS-issued certificate that returns HTTP 500 on every probed
+    path. Live host, no service.
+- host: luminus.nus.edu.sg
+  x-operator: institution
+  https: true
+  cert_subject_organization: National University of Singapore
+  a_record: 137.132.7.240
+  reachable: false
+  note: >-
+    Decommissioned in-house learning management system. DNS and certificate still present; the
+    host does not complete a connection. Recorded as a dead host, not a surface.
 - host: nus.edu.sg
+  x-operator: institution
   https: true
   tls_version: TLSv1.3
   cert_expires: Sep 29 02:20:51 2026 GMT
   hsts: true
   hsts_max_age: 63072000
+  waf: Imperva/Incapsula
+  note: >-
+    Main web estate behind Imperva. Answers unknown paths with HTTP 200 and an HTML body, so
+    /llms.txt and /robots.txt both soft-404. Neither artifact exists.
 - host: scholarbank.nus.edu.sg
+  x-operator: tenant
   https: true
   tls_version: TLSv1.3
   cert_expires: Oct  5 06:49:35 2026 GMT
   hsts: true
   hsts_max_age: 63072000
+  cname: nusor.cname.openrepository.com
+  note: >-
+    Institutional repository. The CNAME to openrepository.com is the operator evidence — Atmire
+    Open Repository hosts and runs the DSpace 7.6 instance.
+- host: canvas.nus.edu.sg
+  x-operator: tenant
+  https: true
+  cert_subject_organization: null
+  cert_validation: Domain Validation
+  cname: nus-vanity.instructure.com
+  note: Canvas LMS tenant. Certificate carries no organization — issued by the platform, not NUS.
+- host: blog.nus.edu.sg
+  x-operator: tenant
+  https: true
+  cert_subject_organization: null
+  cert_issuer: Let's Encrypt
+  cert_expires: Sep 27 08:32:54 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+  cname: c1141.campuspress.com
+  note: NUS blogs platform on CampusPress managed WordPress.
+- host: libguides.nus.edu.sg
+  x-operator: tenant
+  https: true
+  cname: region-au.libguides.com
+  note: Springshare LibGuides tenant, served from the Australian region.
+- host: linc.nus.edu.sg
+  x-operator: tenant
+  https: true
+  cname: nus.iii.com
+  note: Innovative Interfaces library catalogue tenant. Bot-challenged from this network.
 - host: api.nusmods.com
+  x-operator: tenant
   https: true
   tls_version: TLSv1.3
   cert_expires: Sep  4 03:57:51 2026 GMT
   hsts: false
+  note: >-
+    NUSMods, run by the NUSModifications student organisation behind Cloudflare. Not an NUS
+    host and not on an NUS domain; listed because it is where NUS course data is publicly
+    readable.
 domains:
 - domain: nus.edu.sg
   dnssec: false
   caa: []
-  spf: true
-  dmarc: true
-  dmarc_policy: none
-- domain: nusmods.com
-  dnssec: false
-  caa: []
-  spf: true
-  dmarc: true
-  dmarc_policy: quarantine
+  note: No DNSSEC and no CAA records on the institution's registrable domain.
+observations:
+- >-
+  Every host NUS actually runs (vafs, nnextbus, api, luminus) carries a certificate naming
+  National University of Singapore as the organization. Every host NUS rents carries either no
+  organization or the platform's. This one field settles operator attribution more reliably than
+  any heuristic.
+- >-
+  The identity provider — the highest-value host in the estate — has the weakest transport
+  posture of the institution-operated set: TLS 1.2 only and no HSTS.

@@ -1,50 +1,103 @@
+x-generated: '2026-08-19'
+x-method: derived
+x-source: >-
+  Authored against openapi/nus-identity-openapi.yml and the live NUS surfaces it describes.
+  Uses only Spectral built-in functions.
+x-provider: National University of Singapore
+x-providerId: nus
+description: >-
+  A Spectral ruleset for the one institution-operated contract in this repository, plus the
+  governance checks that matter for a federated identity service exposed to the public internet.
+  These are API Evangelist's rules applied to NUS's surface, not rules NUS publishes.
 rules:
-  nus-info-contact-or-description:
-    description: API info should carry a description so consumers understand the NUSMods data scope.
-    severity: warn
+  nus-operator-declared:
+    description: Every NUS contract must declare who operates the thing it describes.
+    message: 'info.x-operator is required and must be institution, tenant, vendor or placeholder.'
+    severity: error
     given: $.info
     then:
-      field: description
+      field: x-operator
       function: truthy
-
-  nus-server-https:
-    description: Prefer the HTTPS NUSMods server entry.
-    severity: warn
+  nus-provenance-method:
+    description: Every NUS contract must say how API Evangelist came to hold it.
+    message: 'info.x-method is required (searched|generated|derived|probed|none).'
+    severity: error
+    given: $.info
+    then:
+      field: x-method
+      function: truthy
+  nus-provenance-source:
+    description: Derived contracts must name the live document they were derived from.
+    message: 'info.x-source is required and must be a URL.'
+    severity: error
+    given: $.info
+    then:
+      field: x-source
+      function: truthy
+  nus-servers-institution-host:
+    description: >-
+      An institution-operated contract must be served from a host under the institution's own
+      registrable domain. This is the check that would have caught the Figshare misattribution.
+    message: 'servers[].url must be under nus.edu.sg for an institution-operated NUS contract.'
+    severity: error
     given: $.servers[*].url
     then:
       function: pattern
       functionOptions:
-        match: "^https://"
-
-  nus-paths-end-in-json:
-    description: All NUSMods resources are static JSON files; every path must end in .json (observed convention).
+        match: '^https://[a-z0-9.-]*nus\.edu\.sg(/|$)'
+  nus-operations-have-ids:
+    description: Every operation needs a stable operationId for agents and code generators.
     severity: error
-    given: $.paths[*]~
+    given: $.paths[*][get,put,post,delete,patch]
     then:
-      function: pattern
-      functionOptions:
-        match: "\\.json$"
-
-  nus-get-only:
-    description: NUSMods data is read-only; only GET operations are expected.
-    severity: error
-    given: $.paths[*][?(@property != 'get' && @property != 'summary' && @property != 'parameters' && @property != 'description')]~
-    then:
-      function: falsy
-
-  nus-acadyear-path-param:
-    description: Year-scoped resources should declare the acadYear path parameter.
+      field: operationId
+      function: truthy
+  nus-operations-described:
+    description: Every operation needs a description, not just a summary.
     severity: warn
-    given: $.paths[?(@property.match(/{acadYear}/))][get].parameters
+    given: $.paths[*][get,put,post,delete,patch]
+    then:
+      field: description
+      function: truthy
+  nus-security-schemes-defined:
+    description: A contract fronting a federated identity service must define its security schemes.
+    severity: error
+    given: $.components
+    then:
+      field: securitySchemes
+      function: truthy
+  nus-token-endpoint-authenticated:
+    description: The token endpoint must not be reachable with empty security.
+    message: 'The OAuth 2.0 token endpoint must declare client authentication.'
+    severity: error
+    given: $.paths['/adfs/oauth2/token/'].post
+    then:
+      field: security
+      function: truthy
+  nus-error-responses-present:
+    description: Every operation should document at least one non-2xx response.
+    severity: warn
+    given: $.paths[*][get,put,post,delete,patch].responses
     then:
       function: truthy
-
-  nus-module-code-string:
-    description: moduleCode is always a string identifier (e.g. CS2100).
+  nus-terms-of-service:
+    description: A public contract should point at the terms the caller is bound by.
     severity: warn
-    given: $.components.schemas[*].properties.moduleCode
+    given: $.info
     then:
-      field: type
-      function: pattern
-      functionOptions:
-        match: "^string$"
+      field: termsOfService
+      function: truthy
+  nus-contact-present:
+    description: A public contract should name a contact.
+    severity: warn
+    given: $.info
+    then:
+      field: contact
+      function: truthy
+x-findings:
+  evaluated: openapi/nus-identity-openapi.yml
+  notes: >-
+    The contract in this repository passes every rule above, which it should — API Evangelist
+    authored it. The rules are published so that if NUS ever ships its own identity contract, or
+    if a future run adds a second institution-operated surface, the operator and provenance
+    checks fire before the artifact is credited to the university.

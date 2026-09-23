@@ -4,21 +4,26 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: National University of Singapore
 providerId: nus
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
 - Higher Education
 - University
 - Rate Limiting
-description: >-
-  National University of Singapore does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+description: National University of Singapore publishes no rate-limit documentation for any surface, and
+  no NUS response observed on 2026-08-19 carried RateLimit, X-RateLimit or Retry-After headers. The institution-operated
+  identity service at vafs.nus.edu.sg advertises no throttling policy. The ScholarBank@NUS OAI-PMH and
+  DSpace REST interfaces are tenant surfaces whose limits are set by Atmire Open Repository, not by NUS;
+  harvest politely and honour Retry-After if it ever appears. The NUSMods API, which is a student organisation's
+  and not the university's, is the only related surface that states a policy at all - its specification
+  says it is not rate limited and asks consumers to fetch no more than once per day.
+notes: No published limits anywhere in the NUS estate. Prior version of this file asserted throttling
+  on "IIIF, library" endpoints that were never confirmed to exist; that claim has been removed.
 sources:
-- https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/apis.yml
+- https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+- https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+- https://api.nusmods.com/v2/swagger.yaml
 responseCodes:
   throttled: 429
 limits:
@@ -33,3 +38,5 @@ policies:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+generated: '2026-08-19'
+method: probed

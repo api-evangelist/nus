@@ -1,55 +1,63 @@
 {
   "@context": {
-    "@version": 1.1,
+    "@vocab": "https://schema.org/",
     "schema": "https://schema.org/",
-    "nus": "https://api-evangelist.github.io/nus/vocab#",
-    "@vocab": "https://api-evangelist.github.io/nus/vocab#",
-
-    "name": "schema:name",
-    "url": "schema:url",
-    "description": "schema:description",
-
-    "institution": {
-      "@id": "schema:CollegeOrUniversity",
-      "@type": "@id"
-    },
-
-    "Module": "nus:Module",
-    "ModuleCondensed": "nus:ModuleCondensed",
-    "VenueInformation": "nus:VenueInformation",
-    "Lesson": "nus:Lesson",
-
-    "moduleCode": "schema:courseCode",
-    "title": "schema:name",
-    "acadYear": "schema:academicYear",
-    "moduleCredit": "schema:numberOfCredits",
-    "department": "schema:department",
-    "faculty": {
-      "@id": "schema:provider",
-      "@type": "@id"
-    },
-    "prerequisite": "schema:coursePrerequisites",
-    "semester": "nus:semester",
-    "semesterData": "nus:semesterData",
-    "timetable": {
-      "@id": "schema:hasCourseInstance",
-      "@container": "@set"
-    },
-    "lessonType": "nus:lessonType",
-    "classNo": "nus:classNo",
-    "day": "schema:dayOfWeek",
-    "startTime": "schema:startTime",
-    "endTime": "schema:endTime",
-    "venue": {
-      "@id": "schema:location",
-      "@type": "@id"
-    },
-    "weeks": "nus:weeks",
-    "workload": "nus:workload",
-    "availability": "nus:availability"
+    "nus": "https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/json-ld/nus-context.jsonld#",
+    "operator": "nus:operator",
+    "entityID": "nus:entityID",
+    "federation": "nus:federation"
   },
-  "@type": "schema:CollegeOrUniversity",
+  "@id": "https://ror.org/01tgyzw49",
+  "@type": "CollegeOrUniversity",
   "name": "National University of Singapore",
+  "alternateName": "NUS",
   "url": "https://nus.edu.sg/",
-  "description": "Educational organization context for NUS-cataloged API objects, primarily the NUSMods module and timetable data model."
+  "identifier": [
+    {
+      "@type": "PropertyValue",
+      "propertyID": "ROR",
+      "value": "https://ror.org/01tgyzw49"
+    },
+    {
+      "@type": "PropertyValue",
+      "propertyID": "SAML entityID",
+      "value": "https://vafs.nus.edu.sg/adfs/services/trust"
+    },
+    {
+      "@type": "PropertyValue",
+      "propertyID": "Handle prefix",
+      "value": "10635"
+    },
+    {
+      "@type": "PropertyValue",
+      "propertyID": "UEN",
+      "value": "200604346E"
+    }
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "SG",
+    "addressLocality": "Singapore"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/school/national-university-of-singapore/",
+    "https://en.wikipedia.org/wiki/National_University_of_Singapore"
+  ],
+  "subOrganization": [
+    {
+      "@type": "Organization",
+      "name": "NUS Libraries",
+      "url": "https://libguides.nus.edu.sg/"
+    },
+    {
+      "@type": "Organization",
+      "name": "NUS Information Technology",
+      "url": "https://nusit.nus.edu.sg/"
+    }
+  ],
+  "x-generated": "2026-08-19",
+  "x-method": "derived",
+  "x-source": "Identifiers verified from the NUS EV TLS certificate (serialNumber/UEN 200604346E), the live SAML federation metadata (entityID), and the ScholarBank@NUS REST API (Handle prefix 10635). ROR identifier is the public ROR registry value for NUS.",
+  "x-operator": "institution",
+  "x-note": "A descriptive organization record only. NUS publishes no JSON-LD API description of its own; nothing here is presented as an NUS artifact."
 }

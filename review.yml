@@ -1,48 +1,140 @@
----
 name: National University of Singapore
 description: National University of Singapore public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
-  - date: '2026-06-03'
-    rating: 2
-    summary: >-
-      NUS has no single official public developer portal. The strongest
-      confirmed public APIs are on the open scholarly side: ScholarBank@NUS runs
-      DSpace 7.6 with a live REST API (/server/api responds with a root document
-      identifying DSpace 7.6) and a live OAI-PMH interface. Module/timetable
-      data is available via the community-maintained NUSMods API
-      (api.nusmods.com/v2), which is explicitly unofficial. Most student and
-      admin systems sit behind ADFS/SAML SSO (vafs.nus.edu.sg/adfs). Note:
-      github.com/nus is NOT National University of Singapore (it resolves to an
-      unrelated individual user), so no official NUS GitHub org was cataloged.
-      No endpoints were fabricated; every URL below was probed live.
-    endpoints:
-      - url: https://scholarbank.nus.edu.sg/server/api
-        status: 200
-        note: DSpace 7.6 REST API root; returns dspaceVersion and HAL _links.
-      - url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
-        status: 200
-        note: OAI-PMH harvesting interface, live.
-      - url: https://scholarbank.nus.edu.sg/
-        status: 200
-        note: ScholarBank@NUS institutional repository (DSpace 7 Angular UI).
-      - url: https://api.nusmods.com/v2/2024-2025/moduleList.json
-        status: 200
-        note: NUSMods community/unofficial API, live module data per acad year.
-      - url: https://nus.edu.sg/
-        status: 200
-        note: Official NUS website.
-      - url: https://vafs.nus.edu.sg/adfs/ls/
-        status: 200
-        note: ADFS/SAML single sign-on endpoint; gated, not public API.
-      - url: https://twitter.com/NUSingapore
-        status: 200
-        note: Official NUS X/Twitter account.
-      - url: https://github.com/nus
-        status: 200
-        note: NOT NUS — resolves to unrelated GitHub user; excluded from catalog.
-      - url: https://noc.comp.nus.edu.sg/docs/
-        status: 0
-        note: School of Computing NOC docs did not resolve at probe time.
+- date: '2026-08-19'
+  rating: 3
+  summary: 'Re-profiled under the API Evangelist university pipeline, which settles operator attribution
+    before saving any contract. The June 2026 review credited NUS with the NUSMods API and its derived
+    artifacts; NUSMods is built and run by NUSModifications, a student organisation, on a non-NUS domain,
+    and its own OpenAPI names mods@nusmods.com as contact. Those artifacts have been removed and the relationship
+    re-labelled as tenant.
+
+
+    The re-profile found a real institution-operated surface the first pass missed entirely: the NUS federated
+    identity service at vafs.nus.edu.sg. It publishes a live OpenID Connect discovery document, a JWKS,
+    and a 77KB signed SAML 2.0 / WS-Federation metadata document for entityID https://vafs.nus.edu.sg/adfs/services/trust,
+    all anonymously readable. Ownership is proven by an Extended Validation TLS certificate issued to
+    O=National University of Singapore. NUS is also a registered identity provider in the Singapore Access
+    Federation, which interfederates with eduGAIN.
+
+
+    Two further institution-operated hosts were confirmed: nnextbus.nus.edu.sg, the campus shuttle bus
+    API, live behind an HTTP Basic challenge; and api.nus.edu.sg, an API gateway hostname on an NUS certificate
+    that returns HTTP 500 on every path probed. Everything else publicly readable belongs to a rented
+    platform: ScholarBank@NUS is Atmire''s DSpace, Canvas is Instructure''s, Blog.nus is CampusPress.
+    LumiNUS, the former in-house LMS, no longer connects.
+
+
+    Notable absences, all verified rather than assumed: nus.edu.sg/llms.txt returns HTTP 200 with an HTML
+    body and is a soft-404; there is no institution-wide GitHub organisation; SCIM was probed and is absent.
+    The main nus.edu.sg estate sits behind an Imperva bot challenge, so deep pages could not be read and
+    are not claimed as pointers. No endpoints were fabricated; every URL below was probed live on 2026-08-19.'
+  endpoints:
+  - url: https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration
+    status: 200
+    note: NUS OIDC discovery document. Institution-operated. Nine scopes, sixteen claims, eight grant
+      types.
+  - url: https://vafs.nus.edu.sg/FederationMetadata/2007-06/FederationMetadata.xml
+    status: 200
+    note: Signed SAML 2.0 metadata, 77,023 bytes, entityID https://vafs.nus.edu.sg/adfs/services/trust.
+      Institution-operated.
+  - url: https://vafs.nus.edu.sg/adfs/discovery/keys
+    status: 200
+    note: JWKS; one RS256 signing key. Institution-operated.
+  - url: https://vafs.nus.edu.sg/adfs/ls/
+    status: 200
+    note: SAML single sign-on endpoint.
+  - url: https://vafs.nus.edu.sg/scim/v2/ServiceProviderConfig
+    status: 404
+    note: SCIM probed and absent; /adfs/scim/v2/ returned 503.
+  - url: https://nnextbus.nus.edu.sg/BusStops
+    status: 401
+    note: NUS shuttle bus API. Live, institution-operated, HTTP Basic gated. TLS cert O=National University
+      of Singapore.
+  - url: https://api.nus.edu.sg/
+    status: 500
+    note: API gateway hostname on an NUS certificate. Returns the Azure API Management error envelope
+      on every path; publishes no route.
+  - url: https://scholarbank.nus.edu.sg/server/api
+    status: 200
+    note: DSpace 7.6 HAL REST API. Tenant - host CNAMEs to nusor.cname.openrepository.com (Atmire).
+  - url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+    status: 200
+    note: 'OAI-PMH 2.0, twelve metadata formats. Defect: repositoryIdentifier returns the unsubstituted
+      template ${oai.identifier.prefix}.'
+  - url: https://canvas.nus.edu.sg/api/lti/security/jwks
+    status: 200
+    note: LTI 1.3 JWKS. Tenant - canvas.nus.edu.sg CNAMEs to nus-vanity.instructure.com.
+  - url: https://canvas.nus.edu.sg/api/v1/accounts
+    status: 401
+    note: Canvas REST API, gated.
+  - url: https://blog.nus.edu.sg/wp-json/
+    status: 200
+    note: WordPress REST API, 11 namespaces, 190 routes. Tenant - CampusPress.
+  - url: https://api.nusmods.com/v2/swagger.yaml
+    status: 200
+    note: OpenAPI 3.0.1, 6 paths. Operated by NUSModifications student org, not NUS. Contact mods@nusmods.com.
+  - url: https://nusaz.singaren.net.sg/simplesaml/saml2/idp/metadata.php
+    status: 200
+    note: NUS entry in the Singapore Access Federation, proxied by SingAREN. Tenant.
+  - url: https://libguides.nus.edu.sg/new2nus/acadintegrity
+    status: 200
+    note: NUS academic integrity and generative-AI guidance. Springshare LibGuides tenant.
+  - url: https://news.nus.edu.sg/nus-makes-ai-courses-compulsory-gives-free-access-to-chatgpt-edu/
+    status: 200
+    note: Official NUS announcement of ChatGPT Edu access and a compulsory AI literacy module.
+  - url: https://nus.edu.sg/llms.txt
+    status: 200
+    note: SOFT-404 - returns text/html, not an llms.txt. Not credited.
+  - url: https://www.nus.edu.sg/robots.txt
+    status: 200
+    note: SOFT-404 - HTML body behind Imperva. Not credited.
+  - url: https://nusit.nus.edu.sg/hpc/
+    status: 403
+    note: Research computing documentation bot-challenged; not readable.
+  - url: https://luminus.nus.edu.sg/
+    status: 0
+    note: Decommissioned in-house LMS. DNS and NUS certificate remain; host does not connect.
+  - url: https://libportal.nus.edu.sg/
+    status: 0
+    note: No DNS A record. Dead host; removed from artifacts.
+- date: '2026-06-03'
+  rating: 2
+  summary: 'NUS has no single official public developer portal. The strongest confirmed public APIs are
+    on the open scholarly side: ScholarBank@NUS runs DSpace 7.6 with a live REST API (/server/api responds
+    with a root document identifying DSpace 7.6) and a live OAI-PMH interface. Module/timetable data is
+    available via the community-maintained NUSMods API (api.nusmods.com/v2), which is explicitly unofficial.
+    Most student and admin systems sit behind ADFS/SAML SSO (vafs.nus.edu.sg/adfs). Note: github.com/nus
+    is NOT National University of Singapore (it resolves to an unrelated individual user), so no official
+    NUS GitHub org was cataloged. No endpoints were fabricated; every URL below was probed live.'
+  endpoints:
+  - url: https://scholarbank.nus.edu.sg/server/api
+    status: 200
+    note: DSpace 7.6 REST API root; returns dspaceVersion and HAL _links.
+  - url: https://scholarbank.nus.edu.sg/oai/request?verb=Identify
+    status: 200
+    note: OAI-PMH harvesting interface, live.
+  - url: https://scholarbank.nus.edu.sg/
+    status: 200
+    note: ScholarBank@NUS institutional repository (DSpace 7 Angular UI).
+  - url: https://api.nusmods.com/v2/2024-2025/moduleList.json
+    status: 200
+    note: NUSMods community/unofficial API, live module data per acad year.
+  - url: https://nus.edu.sg/
+    status: 200
+    note: Official NUS website.
+  - url: https://vafs.nus.edu.sg/adfs/ls/
+    status: 200
+    note: ADFS/SAML single sign-on endpoint; gated, not public API.
+  - url: https://twitter.com/NUSingapore
+    status: 200
+    note: Official NUS X/Twitter account.
+  - url: https://github.com/nus
+    status: 200
+    note: NOT NUS — resolves to unrelated GitHub user; excluded from catalog.
+  - url: https://noc.comp.nus.edu.sg/docs/
+    status: 0
+    note: School of Computing NOC docs did not resolve at probe time.

@@ -1,8 +1,12 @@
 openapi: 3.2.0
 info:
-  title: NUS Identity Provider API (vafs.nus.edu.sg) Authorization API
+  title: NUS Identity Provider API (vafs.nus.edu.sg) Authorization…
   version: '2026-08-19'
-  description: "The National University of Singapore operates its own federated identity service at\n`vafs.nus.edu.sg` (\"NUS VAFS\" — the university's Active Directory Federation Services\ndeployment). It is the one substantial machine-readable, institution-operated API surface\nNUS publishes to the open internet, and it is the front door to essentially every gated\nNUS system.\n\nThe host is unambiguously NUS's own engineering, not a vendor's:\n\n  * `vafs.nus.edu.sg` resolves inside NUS's own address space (137.132.21.18).\n  * Its TLS certificate is an Extended Validation certificate issued to\n    `jurisdictionC=SG, businessCategory=Private Organization, serialNumber=200604346E,\n    O=National University of Singapore, CN=vafs.nus.edu.sg` — NUS is the validated\n    organization, not a hosting provider.\n  * The SAML entityID it asserts is `https://vafs.nus.edu.sg/adfs/services/trust`.\n\nThis document is DERIVED — every path, parameter, scope and response below was read out of\nthe institution's own live OpenID Connect discovery document at\n`https://vafs.nus.edu.sg/adfs/.well-known/openid-configuration` and its JWKS at\n`https://vafs.nus.edu.sg/adfs/discovery/keys`, both fetched 2026-08-19. NUS does not itself\npublish an OpenAPI description; nothing here is invented, but the OpenAPI packaging is\nAPI Evangelist's, not the university's.\n\nThe service speaks OpenID Connect 1.0 / OAuth 2.0, SAML 2.0, WS-Federation and WS-Trust\nfrom the same endpoint family. The SAML half is described in\n`identity-federation/nus-identity-federation.yml`.\n"
+  description: 'The National University of Singapore operates its own federated identity service at
+
+    `vafs.nus.edu.sg` ("NUS VAFS" — the university''s Active Directory Federation Services
+
+    deployment).'
   contact:
     name: NUS Information Technology
     url: https://nusit.nus.edu.sg/

@@ -1,10 +1,14 @@
+generated: '2026-08-19'
+method: derived
+source: Derived from plans/nus-plans-pricing.yml and the 2026-08-19 university pipeline probe sweep; NUS
+  publishes no API billing of any kind.
 specification: FinOps Framework
 specificationVersion: '1.0'
 schema: https://www.finops.org/framework/
 provider: National University of Singapore
 providerId: nus
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
@@ -12,12 +16,13 @@ tags:
 - University
 - FinOps
 - FOCUS
-description: >-
-  FinOps profile for National University of Singapore. As a non-commercial higher-education institution, its
-  APIs carry no usage-based billing; there is no invoiced cost to allocate or optimize.
-  FinOps relevance is limited to the institution's own internal cloud/infrastructure
-  cost management, which is not publicly disclosed.
-notes: No public usage-based API billing; National University of Singapore's APIs are free/open or affiliation-gated.
+description: FinOps profile for National University of Singapore. As a non-commercial higher-education
+  institution, its APIs carry no usage-based billing; there is no invoiced cost to allocate or optimize.
+  FinOps relevance is limited to the institution's own internal cloud/infrastructure cost management,
+  which is not publicly disclosed.
+notes: No public usage-based API billing exists anywhere in the NUS estate. Access to gated NUS APIs is
+  granted on institutional affiliation, not purchase, so there is no invoiced API cost to allocate or
+  optimise.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/apis.yml
 - https://www.finops.org/framework/
