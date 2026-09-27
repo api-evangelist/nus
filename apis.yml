@@ -152,25 +152,20 @@ apis:
   x-operator: tenant
   x-operator-evidence: >-
     canvas.nus.edu.sg CNAMEs to nus-vanity.instructure.com; TLS certificate carries no organization.
-- aid: nus:blog-wp
-  name: Blog.nus WordPress REST API
-  description: >-
-    The NUS academic, educational, research and administrative blogging platform exposes a full WordPress
-    REST API with eleven namespaces and 190 routes, anonymously readable. Runs on CampusPress managed
-    WordPress; the contract is WordPress core's and applies identically to every CampusPress customer.
-  humanURL: https://blog.nus.edu.sg/
+- aid: nus:blog-nus-edu-sg-website-wordpress-rest
+  name: National University of Singapore Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the National University of Singapore website
+    at blog.nus.edu.sg: the route index of the site''s content management system, catalogued as one site
+    surface rather than as separate APIs.'
   baseURL: https://blog.nus.edu.sg/wp-json
   tags:
-  - Publishing
-  - Content
   - WordPress
-  - Blog
+  x-surface: platform-generated
   properties:
   - type: Documentation
-    url: https://blog.nus.edu.sg/wp-json/
-  x-operator: tenant
-  x-operator-evidence: >-
-    blog.nus.edu.sg CNAMEs to c1141.campuspress.com; Let's Encrypt DV certificate with no organization.
+    url: https://blog.nus.edu.sg/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: nus:nusmods
   name: NUSMods API (student-operated, not endorsed)
   description: >-
@@ -188,12 +183,13 @@ apis:
   - Course Catalog
   - Timetable
   - Student Built
-  - Open-Source
+  - Open Source
   tags_raw:
   - Course Catalog
   - Timetable
   - Student Built
   - Open Source
+  - Open-Source
   properties:
   - type: Documentation
     url: https://api.nusmods.com/v2/

@@ -217,6 +217,16 @@ components:
           type: integer
         interval:
           type: integer
+    OAuthError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          example: invalid_grant
+        error_description:
+          type: string
     TokenResponse:
       type: object
       required:
@@ -239,16 +249,6 @@ components:
           type: string
           description: JWT signed with RS256.
         scope:
-          type: string
-    OAuthError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          example: invalid_grant
-        error_description:
           type: string
   securitySchemes:
     bearerAuth:
