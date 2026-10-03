@@ -74,6 +74,47 @@ paths:
                 format: xml
 components:
   schemas:
+    Jwks:
+      type: object
+      required:
+      - keys
+      properties:
+        keys:
+          type: array
+          items:
+            type: object
+            required:
+            - kty
+            - use
+            - alg
+            - kid
+            - n
+            - e
+            properties:
+              kty:
+                type: string
+                example: RSA
+              use:
+                type: string
+                example: sig
+              alg:
+                type: string
+                example: RS256
+              kid:
+                type: string
+              x5t:
+                type: string
+              n:
+                type: string
+                description: RSA modulus
+                base64url.: null
+              e:
+                type: string
+                example: AQAB
+              x5c:
+                type: array
+                items:
+                  type: string
     OpenIdConfiguration:
       type: object
       description: OpenID Provider metadata as returned by the live NUS discovery endpoint.
@@ -141,47 +182,6 @@ components:
           type: boolean
         frontchannel_logout_session_supported:
           type: boolean
-    Jwks:
-      type: object
-      required:
-      - keys
-      properties:
-        keys:
-          type: array
-          items:
-            type: object
-            required:
-            - kty
-            - use
-            - alg
-            - kid
-            - n
-            - e
-            properties:
-              kty:
-                type: string
-                example: RSA
-              use:
-                type: string
-                example: sig
-              alg:
-                type: string
-                example: RS256
-              kid:
-                type: string
-              x5t:
-                type: string
-              n:
-                type: string
-                description: RSA modulus
-                base64url.: null
-              e:
-                type: string
-                example: AQAB
-              x5c:
-                type: array
-                items:
-                  type: string
   securitySchemes:
     bearerAuth:
       type: http

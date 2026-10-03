@@ -199,6 +199,16 @@ paths:
                 $ref: '#/components/schemas/OAuthError'
 components:
   schemas:
+    OAuthError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: string
+          example: invalid_grant
+        error_description:
+          type: string
     DeviceCodeResponse:
       type: object
       required:
@@ -217,16 +227,6 @@ components:
           type: integer
         interval:
           type: integer
-    OAuthError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: string
-          example: invalid_grant
-        error_description:
-          type: string
     TokenResponse:
       type: object
       required:
