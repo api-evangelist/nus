@@ -58,6 +58,17 @@ tags:
 - Research Repository
 - Course Catalog
 - Open Access
+- LMS
+tags_raw:
+- University
+- Higher Education
+- Education
+- Singapore
+- Research
+- Identity Federation
+- Research Repository
+- Course Catalog
+- Open Access
 - Learning Management
 created: '2026-06-03'
 modified: '2026-08-19'
@@ -142,6 +153,11 @@ apis:
   humanURL: https://canvas.nus.edu.sg/
   baseURL: https://canvas.nus.edu.sg/api/v1
   tags:
+  - LMS
+  - LTI
+  - Course Delivery
+  - Gated
+  tags_raw:
   - Learning Management
   - LTI
   - Course Delivery
