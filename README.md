@@ -1,4 +1,4 @@
-# National University of Singapore (nus)
+# National University of Singapore
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,116 +64,157 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The National University of Singapore (NUS) is Singapore's flagship public research university. This
-repository catalogs the institution's public developer and API footprint as an
-[APIs.json](https://apisjson.org) profile, built under the API Evangelist **university pipeline**,
-whose first question is never "is there a spec" but **who operates the thing the spec describes**.
+The National University of Singapore is Singapore's flagship public research university, ranked eighth in the QS World University Rankings 2025, and it is a near-perfect illustration of why a university is a federation of buyers rather than a producer. NUS operates exactly one substantial machine-readable API surface of its own: the federated identity service at vafs.nus.edu.sg, which publishes a live OpenID Connect discovery document, a JWKS, and signed SAML 2.0 metadata for entityID https://vafs.nus.edu.sg/adfs/services/trust, and which registers NUS as an identity provider in the Singapore Access Federation. Everything else that looks like an NUS API belongs to a platform NUS rents — ScholarBank@NUS is Atmire's DSpace, the learning management system is Instructure's Canvas, the blogs are CampusPress, the library guides are Springshare. NUS has an API gateway hostname at api.nus.edu.sg on a certificate issued to the university, and it returns HTTP 500 on every path. The campus shuttle bus API at nnextbus.nus.edu.sg is genuinely NUS's and genuinely live, but sits behind HTTP Basic credentials the university does not issue publicly. Most strikingly, NUS's own course vocabulary — modules, modular credits, prerequisite trees — has no public machine-readable expression from the university at all; the only OpenAPI describing NUS course data is published by NUSMods, a student organisation, from a non-NUS domain. There is no NUS developer portal, no institution-wide GitHub organisation, no public open-data portal, no llms.txt, and no self-service registration path to any NUS API.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/nus/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=nus-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Singapore · Research · Identity Federation · Research Repository · Course Catalog · Open Access · LMS
 
-## The short version
+## National University of Singapore on APIs.io
 
-NUS operates **one** substantial machine-readable API surface of its own — its federated identity
-service. Everything else that looks like an NUS API belongs to a platform NUS rents.
+Everything profiled for National University of Singapore is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nus/](https://apis.io/providers/nus/)** — or go straight to one of the APIs or properties below.
 
-## Type
+### APIs (10)
 
-- University / Public Research University — Index / Consumer / 3rd-Party
+- [NUS NextBus (Internal Shuttle Bus) API](https://apis.io/apis/nus/nextbus/) — The API behind the NUS internal shuttle bus service — bus stops, services and arrival times across the Kent Ridge and Bukit Timah campuses.…
+- [ScholarBank@NUS DSpace REST API](https://apis.io/apis/nus/scholarbank-rest/) — The HAL-style REST API of ScholarBank@NUS, the university's institutional repository — communities, collections, items, bitstreams and a 485-field metadata…
+- [ScholarBank@NUS OAI-PMH Interface](https://apis.io/apis/nus/scholarbank-oai/) — OAI-PMH 2.0 metadata harvesting endpoint for ScholarBank@NUS, advertising twelve metadata formats including oai_dc, qdc, mods, mets, marc, etdms and…
+- [NUS Canvas LMS API](https://apis.io/apis/nus/canvas/) — The learning management system for NUS courses, running on Instructure's Canvas as a vanity tenant. The REST API is live and returns a structured 401 to…
+- [National University of Singapore Website (WordPress REST)](https://apis.io/apis/nus/blog-nus-edu-sg-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the National University of Singapore website at blog.nus.edu.sg: the route index of the site's content management…
+- [NUSMods API (student-operated, not endorsed)](https://apis.io/apis/nus/nusmods/) — The only public machine-readable description of NUS course data that exists — module lists, module information, prerequisite trees, timetables and venue…
+- [NUS entry in the Singapore Access Federation](https://apis.io/apis/nus/sgaf/) — NUS is one of fourteen identity providers registered in the Singapore Access Federation, which SingAREN operates and which interfederates with eduGAIN. The…
+- [National University of Singapore Authorization API](https://apis.io/apis/nus/nus-authorization-api/) — OAuth 2.0 / OpenID Connect authorization and token issuance.
+- [National University of Singapore Discovery API](https://apis.io/apis/nus/nus-discovery-api/) — Machine-readable metadata describing the identity service and its signing keys.
+- [National University of Singapore Session API](https://apis.io/apis/nus/nus-session-api/) — End-user claims and session termination.
 
-## Surfaces, by operator
+### Published properties
 
-Every surface carries an `x-operator`. `institution` means NUS runs it; `tenant` means it is NUS's
-data and NUS's account on somebody else's platform.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Institution-operated
+#### Agentic access (1)
 
-- **NUS Federated Identity Service (VAFS)** — `https://vafs.nus.edu.sg/adfs` — the one real find.
-  Publishes a live OpenID Connect discovery document, a JWKS, and signed SAML 2.0 / WS-Federation
-  metadata for entityID `https://vafs.nus.edu.sg/adfs/services/trust`. Anonymously readable.
-  Ownership is not inferred: the TLS certificate is an Extended Validation certificate issued to
-  `O=National University of Singapore`.
-- **NUS NextBus (Internal Shuttle Bus) API** — `https://nnextbus.nus.edu.sg/` — genuinely NUS's,
-  genuinely live, and gated behind HTTP Basic credentials NUS does not issue publicly (401).
-- **api.nus.edu.sg** — an API gateway hostname on an NUS-issued certificate that returns HTTP 500
-  on every path probed, including `/`, `/docs`, `/api-docs` and `/swagger.json`. Live host, no
-  service. Recorded in `x-coverage`, not listed as a surface.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Tenant — NUS's data, somebody else's contract
+- [Nus Agentic Access](https://apis.io/agentic-access/nus/nus-agentic-access/)
 
-- **ScholarBank@NUS** (REST + OAI-PMH) — Atmire Open Repository's DSpace 7.6
-  (`scholarbank.nus.edu.sg` CNAMEs to `nusor.cname.openrepository.com`).
-- **NUS Canvas** — Instructure (`nus-vanity.instructure.com`). LTI 1.3 JWKS public, REST API 401.
-- **Blog.nus** — CampusPress managed WordPress, 190 REST routes, anonymously readable.
-- **NUSMods API** — the only public machine-readable description of NUS course data in existence,
-  and it is a **student organisation's** work (NUSModifications, `api.nusmods.com`, MIT licensed),
-  not the university's. No institutional endorsement was found.
-- **SGAF federation entry** — NUS is one of fourteen identity providers in the Singapore Access
-  Federation, but the entityID it is registered under is a SimpleSAMLphp proxy SingAREN operates
-  on NUS's behalf.
+#### JSON Schema (2)
 
-## What is deliberately absent
+The data models the API reads and writes.
 
-No developer portal. No institution-wide GitHub organisation. No public open-data portal. No
-`llms.txt` (the 200 at `nus.edu.sg/llms.txt` is a soft-404 returning HTML). No status page, no
-changelog, no deprecation policy, and no self-service registration path to any NUS API.
+- [NUS JSON Web Key Set](https://apis.io/schemas/nus/nus-jwks/)
+- [NUS OpenID Provider Metadata](https://apis.io/schemas/nus/nus-openid-configuration/)
 
-Most notably: NUS's own course vocabulary — modules, modular credits, prerequisite trees — has no
-public machine-readable expression from the university at all. The NUSMods specification states the
-data is scraped daily from "official APIs provided by the Registrar's Office", so an institutional
-course API exists; the public simply cannot reach it.
+#### JSON-LD (1)
 
-## Domain standards (Kin Score `education` regime)
+Linked-data contexts for the provider's vocabulary.
 
-Confirmed: `saml` (institution), `oai-pmh` (tenant), `lti` 1.3 (tenant).
-Partial: `shibboleth` (institution, via SGAF/eduGAIN), `orcid` (tenant), `datacite` (tenant).
-Not found: `scim` (probed, 404/503), `crossref`, `oneroster`, `caliper`, `qti`, `ed-fi`.
+- [Nus Context](https://apis.io/jsonld/nus/nus-context/)
 
-Only two of the six hits belong to NUS's own engineering, and both are identity federation. See
-[conformance/nus-conformance.yml](conformance/nus-conformance.yml).
+#### Vocabulary (1)
 
-## Artifacts
+The provider's domain terms, defined.
 
-| Artifact | Path |
+- [NUS NUSMods API Vocabulary](https://apis.io/vocabularies/nus/nus-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Nus Jwks Example](https://apis.io/examples/nus/nus-jwks-example/)
+- [Nus Openid Configuration Example](https://apis.io/examples/nus/nus-openid-configuration-example/)
+- [Nus Scholarbank Dspace Root Example](https://apis.io/examples/nus/nus-scholarbank-dspace-root-example/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [National University of Singapore API Rules](https://apis.io/rules/nus/nus-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Nus Authentication](https://apis.io/security/nus/nus-authentication/)
+- [Nus Domain Security](https://apis.io/security/nus/nus-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Nus Scopes](https://apis.io/scopes/nus/nus-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Nus Plans Pricing](https://apis.io/plans/nus/nus-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Nus Rate Limits](https://apis.io/rate-limits/nus/nus-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Nus Finops](https://apis.io/finops/nus/nus-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://nus.edu.sg/)
+- [Blog](https://news.nus.edu.sg/)
+
+## API Evangelist rating
+
+**Kin Score 26.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| OpenAPI (derived, institution) | [openapi/nus-identity-openapi.yml](openapi/nus-identity-openapi.yml) |
-| Pristine pre-refine copy | [openapi/_original/](openapi/_original/) |
-| Identity federation | [identity-federation/nus-identity-federation.yml](identity-federation/nus-identity-federation.yml) |
-| Domain standard conformance | [conformance/nus-conformance.yml](conformance/nus-conformance.yml) |
-| Authentication | [authentication/nus-authentication.yml](authentication/nus-authentication.yml) |
-| Scopes | [scopes/nus-scopes.yml](scopes/nus-scopes.yml) |
-| Errors | [errors/nus-errors.yml](errors/nus-errors.yml) |
-| Lifecycle | [lifecycle/nus-lifecycle.yml](lifecycle/nus-lifecycle.yml) |
-| JSON Schema | [json-schema/](json-schema/) |
-| Examples (verbatim live captures) | [examples/](examples/) |
-| Vocabulary | [vocabulary/nus-vocabulary.yml](vocabulary/nus-vocabulary.yml) |
-| Rules | [rules/nus-rules.yml](rules/nus-rules.yml) |
-| JSON-LD | [json-ld/nus-context.jsonld](json-ld/nus-context.jsonld) |
-| Agentic access | [agentic-access/nus-agentic-access.yml](agentic-access/nus-agentic-access.yml) |
-| Domain security | [security/nus-domain-security.yml](security/nus-domain-security.yml) |
-| Plans / Rate limits / FinOps | [plans/](plans/) · [rate-limits/](rate-limits/) · [finops/](finops/) |
-| Review | [review.yml](review.yml) |
+| Discoverability | 62.5 |
+| Contract quality | 24.7 |
+| Contract governance | 11.4 |
+| Operational transparency | 23.7 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 21.1 |
 
-Every artifact carries `generated`, `method` (`searched` / `generated` / `derived` / `probed` /
-`none`) and `source`. The OpenAPI in this repository is **derived** — NUS publishes no OpenAPI;
-every path in it was read out of the university's own live OIDC discovery document.
+**Agent readiness 29.0** — agent-ready
 
-## Corrections made on 2026-08-19
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-- Two NUSMods request collections were **removed**. They describe a student organisation's API, not
-  the university's, and crediting them to NUS was an artifact-presence-is-not-provenance error. The
-  relationship is retained as a `tenant` entry.
-- `agentic-access/` was regenerated. The previous version was derived from the NUSMods OpenAPI and
-  pointed at a source file that no longer exists; it now derives from the institution-operated
-  identity contract.
-- `security/nus-domain-security.yml` was rebuilt around TLS certificate **organization** fields,
-  which settle operator attribution more reliably than any heuristic.
+**Regulatory alignment 26.5** — Education & Research
 
-## Timestamps
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nus/](https://apis.io/providers/nus/).
 
-- Created: 2026-06-03
-- Modified: 2026-08-19
+## How this profile is made
 
-## Maintainers
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-- Kin Lane — kin@apievangelist.com
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for National University of Singapore: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nus/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
